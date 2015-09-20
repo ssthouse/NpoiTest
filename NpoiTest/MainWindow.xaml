@@ -1,0 +1,47 @@
+﻿<Window x:Class="NpoiTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NpoiTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="281*" />
+            <ColumnDefinition Width="236*" />
+        </Grid.ColumnDefinitions>
+
+
+        <!--左边的布局-->
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+
+            <!--上方的输入Panel-->
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Label Content="数据库文件" Margin="8, 8, 8, 8" />
+                <TextBox Width="140" VerticalContentAlignment="Center"
+                         VerticalAlignment="Center" Height="30" TextAlignment="Justify" />
+                <Button Width="40" Content="..." Margin="12, 8, 8, 8" />
+            </StackPanel>
+
+            <!-- 工程选择栏 -->
+            <ComboBox />
+
+            <!--表格数据-->
+            <DataGrid Name="dgTable" ItemsSource="{Binding}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding name}" Width="60" Header="header1" />
+                    <DataGridTextColumn Binding="{Binding name}"  Width="60" Header="header2" />
+                    <DataGridTextColumn Binding="{Binding name}"  Width="60" Header="header3" />
+                    <DataGridTextColumn Binding="{Binding name}"  Width="60" Header="header4" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <!--右边的布局-->
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            
+            
+        </StackPanel>
+    </Grid>
+</Window>
