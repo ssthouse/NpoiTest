@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace NpoiTest.Model
 {
+    /// <summary>
+    /// 用于table的数据bean
+    /// </summary>
     class dgBean : INotifyCollectionChanged
     {
         public event NotifyCollectionChangedEventHandler CollectionChanged;

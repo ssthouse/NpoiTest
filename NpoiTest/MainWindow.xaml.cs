@@ -25,9 +25,6 @@ namespace NpoiTest
     /// </summary>
     public partial class MainWindow : Window
     {
-
-
-
         //dataGrid中的数据
         private ObservableCollection<dgBean> dgBeanList;
 
@@ -38,6 +35,7 @@ namespace NpoiTest
             //初始化View
             InitView();
 
+            //TODO---测试代码
             WordTest.GetInstance().ReadWord();
         }
 
@@ -52,5 +50,5 @@ namespace NpoiTest
             dgBeanList.Add(new dgBean());
             dgBeanList.Add(new dgBean());
         }
-}
+    }
 }
