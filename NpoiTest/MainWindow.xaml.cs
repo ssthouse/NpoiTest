@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NpoiTest.Model;
+using NpoiTest.Model.Database;
 using NpoiTest.Office.Word;
 using NPOI.XWPF.UserModel;
 
@@ -26,14 +27,17 @@ namespace NpoiTest
     public partial class MainWindow : Window
     {
         //dataGrid中的数据
-        private ObservableCollection<dgBean> dgBeanList;
+//        private ObservableCollection<dgBean> dgBeanList;
+        private List<DbBean> dbBeanList;
 
         public MainWindow()
         {
             InitializeComponent();
 
             //初始化View
-            InitView();
+            InitData();
+
+            dgTable.DataContext = dbBeanList;
 
             //TODO---测试代码
             WordTest.GetInstance().ReadWord();
@@ -42,13 +46,13 @@ namespace NpoiTest
         /// <summary>
         /// 初始化View
         /// </summary>
-        private void InitView()
+        private void InitData()
         {
-            dgBeanList = new ObservableCollection<dgBean>();
-            dgBeanList.Add(new dgBean());
-            dgBeanList.Add(new dgBean());
-            dgBeanList.Add(new dgBean());
-            dgBeanList.Add(new dgBean());
+            dbBeanList = new List<DbBean>();
+            dbBeanList.Add(new DbBean());
+            dbBeanList.Add(new DbBean());
+            dbBeanList.Add(new DbBean());
+            dbBeanList.Add(new DbBean());
         }
     }
 }

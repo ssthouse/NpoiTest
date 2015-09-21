@@ -34,10 +34,9 @@
             <!--表格数据-->
             <DataGrid Name="dgTable" ItemsSource="{Binding}" Margin="10, 10, 10, 10">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding name}" Width="60" Header="header1" />
-                    <DataGridTextColumn Binding="{Binding name}" Width="60" Header="header2" />
-                    <DataGridTextColumn Binding="{Binding name}" Width="60" Header="header3" />
-                    <DataGridTextColumn Binding="{Binding name}" Width="60" Header="header4" />
+                    <DataGridTextColumn Binding="{Binding PrjName}" Width="60" Header="PrjName" />
+                    <DataGridTextColumn Binding="{Binding Longitude}" Width="60" Header="Longitude" />
+                    <DataGridTextColumn Binding="{Binding Latitude}" Width="60" Header="Latitude" />
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

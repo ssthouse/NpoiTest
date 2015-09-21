@@ -84,6 +84,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Database\DbBean.cs" />
     <Compile Include="Model\dgBean.cs" />
     <Compile Include="Office\Word\WordTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
