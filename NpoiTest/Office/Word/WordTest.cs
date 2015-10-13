@@ -1,32 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NpoiTest.Model;
+using System.Runtime.ConstrainedExecution;
 using NPOI.XWPF.UserModel;
 
 namespace NpoiTest.Office.Word
 {
     /// <summary>
-    /// Word操作的单例类
+    ///     Word操作的单例类
     /// </summary>
-    class WordTest
+    internal class WordTest
     {
-        
-        
         /// <summary>
-        /// 构造方法
+        ///     唯一的单例
+        /// </summary>
+        private static WordTest mWordTest;
+
+        /// <summary>
+        ///     构造方法
         /// </summary>
         private WordTest()
         {
         }
 
-        //唯一的单例
-        private static WordTest mWordTest;
-
+        /// <summary>
+        ///     获取唯一的单例
+        /// </summary>
+        /// <returns></returns>
         public static WordTest GetInstance()
         {
             if (mWordTest == null)
@@ -37,29 +36,42 @@ namespace NpoiTest.Office.Word
         }
 
         /// <summary>
-        /// Word文件文字替换操作
+        ///     Word文件文字替换操作
         /// </summary>
         public void ReplaceText()
         {
-            var docx = new XWPFDocument(new FileStream("F:/template.docx", FileMode.Open));
-
+            // var docx = new XWPFDocument(new FileStream("F:/template.docx", FileMode.Open));
         }
 
         /// <summary>
-        /// 测试Word文件读取
+        ///     测试Word文件读取
         /// </summary>
         public void ReadWord()
         {
-            var docx = new XWPFDocument(new FileStream("F:/template.docx", FileMode.Open));
-            foreach (var paragraph in docx.Paragraphs)
+            //TODO----这里是测试文档
+            var fileStream = File.OpenRead("F:\\template.docx");
+            var docx = new XWPFDocument(fileStream);
+            //            foreach (var paragraph in docx.Paragraphs)
+            //            {
+            //                foreach ( var run in paragraph.Runs)
+            //                {
+            //                    Console.WriteLine(run.Text);
+            //                }
+            //                Console.WriteLine(paragraph.Text);
+            //            }
+            foreach (var para in docx.Paragraphs)
             {
-//                foreach ( var run in paragraph.Runs)
-//                {
-//                    Console.WriteLine(run.Text);
-//                }
-                Console.WriteLine(paragraph.Text);
+                string text = para.ParagraphText; //获得文本
+                var runs = para.Runs;
+                string styleid = para.Style;
+
+                for (var i = 0; i < runs.Count; i++)
+                {
+                    var run = runs[i];
+                    text = run.ToString(); //获得run的文本
+                    Console.WriteLine(text);
+                }
             }
         }
-
     }
 }
