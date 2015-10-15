@@ -1,0 +1,9 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="C:\Workspace\WinFrom\NpoiTest\NPOI 2.2.0.0\dotnet4\NPOI.OOXML.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Workspace\WinFrom\NpoiTest\NPOI 2.2.0.0\dotnet4\NPOI.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Workspace\WinFrom\NpoiTest\NPOI 2.2.0.0\dotnet4\NPOI.OpenXml4Net.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Workspace\WinFrom\NpoiTest\NpoiTest\bin\Debug\System.Data.SQLite.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Workspace\WinFrom\NpoiTest\lib\System.Data.SQLite.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Core.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
