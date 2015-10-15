@@ -129,7 +129,6 @@
   <ItemGroup>
     <Compile Include="Model\Database\DbBean.cs" />
     <Compile Include="Model\Database\DbData.cs" />
-    <Compile Include="Model\dgBean.cs" />
     <Compile Include="Office\Word\ExcelGenerator.cs" />
     <Compile Include="Office\Word\WordGenerator.cs" />
     <Compile Include="Office\Word\WordTest.cs" />
