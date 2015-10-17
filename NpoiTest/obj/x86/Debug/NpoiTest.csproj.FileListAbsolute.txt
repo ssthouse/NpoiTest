@@ -13,7 +13,6 @@ C:\Workspace\WinFrom\NpoiTest\NpoiTest\bin\x86\Debug\NPOI.OpenXml4Net.xml
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\Main\MainWindow.g.cs
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\App.g.cs
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\NpoiTest_MarkupCompile.cache
-C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\NpoiTest_MarkupCompile.lref
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\Main\MainWindow.baml
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\NpoiTest.g.resources
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\NpoiTest.Properties.Resources.resources

@@ -27,7 +27,7 @@ namespace NpoiTest
             InitView();
 
             //TODO---测试代码
-            WordTest.GetInstance().ReadWord();
+//            WordTest.GetInstance().ReadWord();
         }
 
         /// <summary>
