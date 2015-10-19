@@ -38,7 +38,7 @@ namespace NpoiTest.Model.Database
         /// </summary>
         public List<string> GetProjectStrList()
         {
-            //首先读取project表数据
+            //首先读取project表数据(这里需要判断一下数据库文件是不是空的)
             SQLiteCommand readCmd = connection.CreateCommand();
             readCmd.CommandText = "SELECT prjName FROM Projects";
             SQLiteDataReader reader = readCmd.ExecuteReader();

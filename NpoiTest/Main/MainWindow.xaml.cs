@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Microsoft.Win32;
 using NpoiTest.Model.Database;
 using NpoiTest.Office.Word;
@@ -43,7 +44,12 @@ namespace NpoiTest
                 dialog.Filter = "数据库文件|*.db;*.pptx|hahaha|*.docx";
                 dialog.ShowDialog(this);
                 //获取选取的文件路径
+                if (dialog.FileName == null || dialog.FileName.Length == 0)
+                {
+                    return;
+                }
                 var dbPath = dialog.FileName;
+                Console.WriteLine(dbPath);
 
                 //更新textbox的文字
                 tbDbPath.Text = dbPath;

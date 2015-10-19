@@ -26,3 +26,7 @@ C:\Workspace\WinFrom\NpoiTest\NpoiTest\bin\x86\Debug\EntityFramework.xml
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\bin\x86\Debug\EntityFramework.SqlServer.xml
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\bin\x86\Debug\System.Data.SQLite.EF6.dll
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\bin\x86\Debug\System.Data.SQLite.Linq.dll
+C:\Workspace\WinFrom\NpoiTest\NpoiTest\bin\x86\Debug\NpoiTest.exe.manifest
+C:\Workspace\WinFrom\NpoiTest\NpoiTest\bin\x86\Debug\NpoiTest.application
+C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\NpoiTest.exe.manifest
+C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\NpoiTest.application
