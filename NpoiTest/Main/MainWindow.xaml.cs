@@ -1,10 +1,11 @@
-﻿using System;
-using System.Windows;
-using Microsoft.Win32;
-using NpoiTest.Model.Database;
+﻿using NpoiTest.Model.Database;
 using NpoiTest.Office.Word;
+using System;
+using System.Windows;
+using System.Windows.Forms;
+using NpoiTest.DigitalMapDbLib.View;
 
-namespace NpoiTest
+namespace NpoiTest.Main
 {
     /// <summary>
     ///     程序的入口
@@ -24,11 +25,23 @@ namespace NpoiTest
         {
             InitializeComponent();
 
-            //初始化View
+            //初始化View---以及点击事件
             InitView();
 
-            //TODO---测试代码
-//            WordTest.GetInstance().ReadWord();
+            //初始化MenuItem的相应时间
+            InitMenuItem();
+        }
+
+        /// <summary>
+        /// 初始化MenuItem
+        /// </summary>
+        private void InitMenuItem()
+        {
+            this.menuDigitalMapToDb.Click += delegate(object sender, RoutedEventArgs args)
+            {
+                DigitalMapToDbView digitalMapToDbView = new DigitalMapToDbView();
+                digitalMapToDbView.Show();
+            };
         }
 
         /// <summary>
@@ -42,7 +55,7 @@ namespace NpoiTest
                 //打开文件选择器
                 FileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "数据库文件|*.db;*.pptx|hahaha|*.docx";
-                dialog.ShowDialog(this);
+                dialog.ShowDialog();
                 //获取选取的文件路径
                 if (dialog.FileName == null || dialog.FileName.Length == 0)
                 {
@@ -106,13 +119,13 @@ namespace NpoiTest
             {
                 if (dbData == null)
                 {
-                    MessageBox.Show("请先选择一个数据库文件", "提示");
+                    System.Windows.MessageBox.Show("请先选择一个数据库文件", "提示");
                     return;
                 }
                 var outputPath = tbWordPath.Text;
                 if (outputPath == null || outputPath.Length == 0)
                 {
-                    MessageBox.Show("请先选择输出路径");
+                    System.Windows.MessageBox.Show("请先选择输出路径");
                     return;
                 }
                 //生成word文件
@@ -125,13 +138,13 @@ namespace NpoiTest
             {
                 if (dbData == null)
                 {
-                    MessageBox.Show("请先选择一个数据库文件", "提示");
+                    System.Windows.MessageBox.Show("请先选择一个数据库文件", "提示");
                     return;
                 }
                 var outputPath = tbExcelPath.Text;
                 if (outputPath == null || outputPath.Length == 0)
                 {
-                    MessageBox.Show("请先选择输出路径", "提示");
+                    System.Windows.MessageBox.Show("请先选择输出路径", "提示");
                     return;
                 }
                 //生成word文件

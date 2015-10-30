@@ -1,91 +1,103 @@
-﻿<Window x:Class="NpoiTest.MainWindow"
+﻿<Window x:Class="NpoiTest.Main.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="MainWindow" Height="540" Width="700">
-    <Grid>
-        <!--总布局-->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350*" />
-            <ColumnDefinition Width="350*" />
-        </Grid.ColumnDefinitions>
+    
+    
+    <StackPanel Orientation="Vertical">
+        <Menu Margin="10, 10, 0, 10" Height="24">
+            <MenuItem Name="menuTools" Header="  工具" Height="24" FontSize="14" Width="60" 
+                      HorizontalContentAlignment="Right" HorizontalAlignment="Center">
+                <MenuItem Name="menuDigitalMapToDb" Header="数字地图转数据库"></MenuItem>
+            </MenuItem>
+        </Menu>
+        
+        <Grid>
+            <!--总布局-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350*" />
+                <ColumnDefinition Width="350*" />
+            </Grid.ColumnDefinitions>
 
-        <!--左边的布局-->
-        <StackPanel Margin="10" Grid.Column="0" Orientation="Vertical">
+            <!--左边的布局-->
+            <StackPanel Margin="10" Grid.Column="0" Orientation="Vertical">
 
-            <GroupBox Header="打开数据库文件" Height="140">
-                <StackPanel Orientation="Vertical">
-                    <!--上方的输入Panel-->
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Label Content="数据库路径:" Margin="8, 8, 8, 8" />
-                        <TextBox Name="tbDbPath" Width="160" VerticalContentAlignment="Center"
+                <GroupBox Header="打开数据库文件" Height="140">
+                    <StackPanel Orientation="Vertical">
+                        <!--上方的输入Panel-->
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Label Content="数据库路径:" Margin="8, 8, 8, 8" />
+                            <TextBox Name="tbDbPath" Width="160" VerticalContentAlignment="Center"
                                  Height="24" TextAlignment="Justify" />
-                        <Button Name="btnOpenDbFile" Width="20" Content="..." Margin="10, 8, 8, 8" />
+                            <Button Name="btnOpenDbFile" Width="20" Content="..." Margin="10, 8, 8, 8" />
+                        </StackPanel>
+
+                        <!-- 工程选择栏 -->
+                        <ComboBox Name="cbPrjChoose" Margin="10, 10, 10, 10" />
                     </StackPanel>
+                </GroupBox>
 
-                    <!-- 工程选择栏 -->
-                    <ComboBox Name="cbPrjChoose" Margin="10, 10, 10, 10" />
-                </StackPanel>
-            </GroupBox>
+                <!--表格数据-->
+                <DataGrid Name="dgTable" ItemsSource="{Binding}" Margin="10, 10, 10, 10">
+                    <DataGrid.Columns>
+                        <!--                    <DataGridTextColumn Binding="{Binding PrjName}" Width="60" Header="PrjName" />-->
+                        <!--                    <DataGridTextColumn Binding="{Binding Longitude}" Width="60" Header="Longitude" />-->
+                        <!--                    <DataGridTextColumn Binding="{Binding Latitude}" Width="60" Header="Latitude" />-->
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
 
-            <!--表格数据-->
-            <DataGrid Name="dgTable" ItemsSource="{Binding}" Margin="10, 10, 10, 10">
-                <DataGrid.Columns>
-                    <!--                    <DataGridTextColumn Binding="{Binding PrjName}" Width="60" Header="PrjName" />-->
-                    <!--                    <DataGridTextColumn Binding="{Binding Longitude}" Width="60" Header="Longitude" />-->
-                    <!--                    <DataGridTextColumn Binding="{Binding Latitude}" Width="60" Header="Latitude" />-->
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
+            <!--右边的布局-->
+            <StackPanel Grid.Column="1" Orientation="Vertical">
 
-        <!--右边的布局-->
-        <StackPanel Grid.Column="1" Orientation="Vertical">
-
-            <!-- Word输出配置-->
-            <GroupBox Margin="10" Header="Word输出">
-                <StackPanel Orientation="Vertical">
-                    <!--Word输出路径-->
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 10, 10, 10">
-                        <Label Content="Word路径：" />
-                        <TextBox Name="tbWordPath" VerticalContentAlignment="Center" Width="160" />
-                        <Button Name="btnGetWordPath" Margin="10, 0, 0, 0" HorizontalContentAlignment="Center"
+                <!-- Word输出配置-->
+                <GroupBox Margin="10" Header="Word输出">
+                    <StackPanel Orientation="Vertical">
+                        <!--Word输出路径-->
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 10, 10, 10">
+                            <Label Content="Word路径：" />
+                            <TextBox Name="tbWordPath" VerticalContentAlignment="Center" Width="160" />
+                            <Button Name="btnGetWordPath" Margin="10, 0, 0, 0" HorizontalContentAlignment="Center"
                                 Content="..." Width="20" />
-                    </StackPanel>
+                        </StackPanel>
 
-                    <!-- 两个输入-->
-                    <StackPanel Margin="0, 10, 0, 10" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Label Content="标题:" Margin="0, 0, 10, 0" />
-                        <TextBox VerticalContentAlignment="Center" Width="140" Height="24" Name="tbWordTitle" />
+                        <!-- 两个输入-->
+                        <StackPanel Margin="0, 10, 0, 10" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Label Content="标题:" Margin="0, 0, 10, 0" />
+                            <TextBox VerticalContentAlignment="Center" Width="140" Height="24" Name="tbWordTitle" />
+                        </StackPanel>
+                        <StackPanel Margin="0, 0, 0, 10" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Label Content="日期:" Margin="0, 0, 10, 0"/>
+                            <TextBox VerticalContentAlignment="Center" Width="140" Height="24" Name="tbWordDate" />
+                        </StackPanel>
+                        <Button Content="生成Word" Name="btnGenerateWord" Height="25" Width="180" Margin="0, 10, 0, 10" />
                     </StackPanel>
-                    <StackPanel Margin="0, 0, 0, 10" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Label Content="日期:" Margin="0, 0, 10, 0"/>
-                        <TextBox VerticalContentAlignment="Center" Width="140" Height="24" Name="tbWordDate" />
-                    </StackPanel>
-                    <Button Content="生成Word" Name="btnGenerateWord" Height="25" Width="180" Margin="0, 10, 0, 10" />
-                </StackPanel>
-            </GroupBox>
+                </GroupBox>
 
-            <!-- Excel输出配置-->
-            <GroupBox Margin="10" Header="Excel输出">
-                <StackPanel Orientation="Vertical">
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 10, 10, 10">
-                        <Label Content="Excel路径：" />
-                        <TextBox Name="tbExcelPath" VerticalContentAlignment="Center" Width="160" />
-                        <Button Name="btnGetExcelPath" Margin="10, 0, 0, 0" HorizontalContentAlignment="Center"
+                <!-- Excel输出配置-->
+                <GroupBox Margin="10" Header="Excel输出">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 10, 10, 10">
+                            <Label Content="Excel路径：" />
+                            <TextBox Name="tbExcelPath" VerticalContentAlignment="Center" Width="160" />
+                            <Button Name="btnGetExcelPath" Margin="10, 0, 0, 0" HorizontalContentAlignment="Center"
                                 Content="..." Width="20" />
+                        </StackPanel>
+                        <Button Content="生成Excel" Name="btnGenerateExcel" Height="25" Width="180" Margin="0, 10, 0, 10" />
                     </StackPanel>
-                    <Button Content="生成Excel" Name="btnGenerateExcel" Height="25" Width="180" Margin="0, 10, 0, 10" />
-                </StackPanel>
-            </GroupBox>
+                </GroupBox>
 
-            <!--使用步骤-->
-            <GroupBox Header="使用步骤" Margin="10, 10, 10, 10">
-                <!--使用说明-->
-                <TextBlock FontSize="14" TextWrapping="WrapWithOverflow" Margin="10, 10, 10, 10"
+                <!--使用步骤-->
+                <GroupBox Header="使用步骤" Margin="10, 10, 10, 10">
+                    <!--使用说明-->
+                    <TextBlock FontSize="14" TextWrapping="WrapWithOverflow" Margin="10, 10, 10, 10"
                            Text="1.选择数据库文件&#x000A;2.选择需要导出的工程名称&#x000A;3.选择导出的文件目录&#x000A;4.选择导出word或excel文件&#x000A;" />
-            </GroupBox>
-        </StackPanel>
-    </Grid>
+                </GroupBox>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+  
 </Window>

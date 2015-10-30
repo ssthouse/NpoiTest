@@ -30,3 +30,5 @@ C:\Workspace\WinFrom\NpoiTest\NpoiTest\bin\x86\Debug\NpoiTest.exe.manifest
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\bin\x86\Debug\NpoiTest.application
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\NpoiTest.exe.manifest
 C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\NpoiTest.application
+C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\DigitalMapToDbLib\View\DigitalMapToDbView.baml
+C:\Workspace\WinFrom\NpoiTest\NpoiTest\obj\x86\Debug\DigitalMapToDbLib\View\DigitalMapToDbView.g.cs
