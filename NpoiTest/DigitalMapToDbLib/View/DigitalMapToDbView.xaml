@@ -26,6 +26,7 @@
 
             <Button FontSize="14" Name="btnGenerateDBFile" Height="26" Content="生成数据库文件" Margin="10, 10, 10, 0" />
 
+            <ProgressBar Visibility="Hidden" Name="pbDigitalMapConvert" IsIndeterminate="True" Height="20" Margin="10, 10, 10, 0"> </ProgressBar>
         </StackPanel>
     </Grid>
 

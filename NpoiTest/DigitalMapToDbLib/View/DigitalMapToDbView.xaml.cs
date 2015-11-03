@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Threading;
+using System.Windows;
 using System.Windows.Forms;
 using DigitalMapToDB.DigitalMapParser;
 using DigitalMapToDB.DigitalMapParser.Utils;
@@ -16,6 +18,8 @@ namespace NpoiTest.DigitalMapDbLib.View
         /// </summary>
         private PrjItem prjItem;
 
+        //数字地图路径
+        private string digitalFilePath;
         //输出路径
         private string outputPath;
 
@@ -50,10 +54,9 @@ namespace NpoiTest.DigitalMapDbLib.View
                         System.Windows.MessageBox.Show("当前路径不符合数字地图文件要求", "错误");
                         return;
                     }
-                    //显示选中的文件夹
+                    //获取选中的文件夹
                     this.tboxDigitalPath.Text = dialog.SelectedPath;
-                    //创建prjItem
-                    prjItem = new PrjItem(this.tboxDigitalPath.Text);
+                    digitalFilePath = dialog.SelectedPath;
                 }
             };
 
@@ -78,7 +81,7 @@ namespace NpoiTest.DigitalMapDbLib.View
             this.btnGenerateDBFile.Click += delegate(object sender, RoutedEventArgs args)
             {
                 //需要先选择数字地图文件夹
-                if (prjItem == null)
+                if (digitalFilePath == null)
                 {
                     System.Windows.MessageBox.Show("请先选择数字地图文件夹！");
                     return;
@@ -88,13 +91,47 @@ namespace NpoiTest.DigitalMapDbLib.View
                     System.Windows.MessageBox.Show("请先选择输出路径！");
                     return;
                 }
-                //如果数据库管理器还是空的---就初始化
-                if (dbHelper == null)
-                {
-                    dbHelper = new DbHelper(prjItem);
-                }
-                dbHelper.generateDbFile(outputPath);
+                //启动线程---生成数据库文件
+                Thread thread = new Thread(new ThreadStart(generateDbFile));
+                thread.Start();
             };
+        }
+
+        /// <summary>
+        /// 生成数据库文件
+        /// </summary>
+        private void generateDbFile()
+        {
+            //让progressbar显示出来
+            //this.pbDigitalMapConvert.Visibility = Visibility.Visible;
+            Action<System.Windows.Controls.ProgressBar, bool> updataAction = new Action<System.Windows.Controls.ProgressBar, bool>(updataProgressBar);
+            this.pbDigitalMapConvert.Dispatcher.BeginInvoke(updataAction, pbDigitalMapConvert, true);
+            if (prjItem == null)
+            {
+                prjItem = new PrjItem(digitalFilePath);
+            }
+            if (dbHelper == null)
+            {
+                dbHelper = new DbHelper(prjItem);
+            }
+            dbHelper.generateDbFile(outputPath);
+            this.pbDigitalMapConvert.Dispatcher.BeginInvoke(updataAction, pbDigitalMapConvert, false);
+        }
+
+        /// <summary>
+        /// 更新UI用的方法
+        /// </summary>
+        /// <param name="isShow"></param>
+        private void updataProgressBar(System.Windows.Controls.ProgressBar pb, bool isShow)
+        {
+            if (isShow)
+            {
+                this.pbDigitalMapConvert.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.pbDigitalMapConvert.Visibility = Visibility.Hidden;
+            }
         }
     }
 }
