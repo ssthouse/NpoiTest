@@ -5,7 +5,10 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Microsoft.SqlServer.Server;
+using Point = DigitalMapToDB.DigitalMapParser.MapData.Point;
+using Vector = DigitalMapToDB.DigitalMapParser.MapData.Vector;
 
 namespace DigitalMapToDB.DigitalMapParser.Utils
 {
@@ -32,7 +35,7 @@ namespace DigitalMapToDB.DigitalMapParser.Utils
         public void generateDbFile(String path)
         {
             //创建一下数据库试试
-            SQLiteConnection connection = new SQLiteConnection("Data Source=" + path + "\\数字地图.db");
+            SQLiteConnection connection = new SQLiteConnection("Data Source=" + path);
             connection.Open();
             SQLiteCommand cmd = connection.CreateCommand();
             cmd.CommandText = "CREATE TABLE TextPoint(longitude REAL, latitude REAL, content TEXT)";
@@ -77,6 +80,7 @@ namespace DigitalMapToDB.DigitalMapParser.Utils
             //释放资源
             cmd.Dispose();
             connection.Close();
+            MessageBox.Show("文件生成成功", "提示");
         }
     }
 }

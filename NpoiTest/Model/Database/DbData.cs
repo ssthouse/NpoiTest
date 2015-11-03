@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Windows;
+using DigitalMapToDB.DigitalMapParser.Utils;
 
 namespace NpoiTest.Model.Database
 {
@@ -12,6 +13,14 @@ namespace NpoiTest.Model.Database
     /// </summary>
     internal class DbData
     {
+        private const string TAG = "DbData";
+
+        /// <summary>
+        /// 数据库中的表名
+        /// </summary>
+        private const string TABLE_PROJECT = "Projects";
+        private const string TABLE_MARKER = "Markers";
+
         //唯一的数据库连接
         private SQLiteConnection connection;
 
@@ -31,6 +40,33 @@ namespace NpoiTest.Model.Database
             {
                 MessageBox.Show("数据库文件不存在");
             }
+        }
+
+        /// <summary>
+        /// 指定的数据库文件是否可用
+        /// </summary>
+        /// <returns></returns>
+        public static  bool IsDbFileValid(string dbPath)
+        {
+            SQLiteConnection connection = new SQLiteConnection("Data Source=" + dbPath);
+            connection.Open();
+            SQLiteCommand readTableCmd = connection.CreateCommand();
+            readTableCmd.CommandText = "SELECT name FROM sqlite_master WHERE TYPE='table'";
+           SQLiteDataReader reader =  readTableCmd.ExecuteReader();
+            List<string> tableList = new List<string>();
+            while (reader.Read())
+            {
+                tableList.Add(reader.GetString(0));
+                Log.Err(TAG, reader.GetString(0));
+            }
+            //如果不包含这几个表名---返回false
+            if (!tableList.Contains(TABLE_PROJECT) || !tableList.Contains(TABLE_MARKER))
+            {
+                connection.Close();
+                return false;
+            }
+            connection.Close();
+            return true;
         }
 
         /// <summary>

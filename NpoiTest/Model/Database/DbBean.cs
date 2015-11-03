@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NpoiTest.Model.Database
 {
-    class DbBean
+    internal class DbBean
     {
         //三个关键数据----工程名---经度---维度
         public string PrjName { get; set; }

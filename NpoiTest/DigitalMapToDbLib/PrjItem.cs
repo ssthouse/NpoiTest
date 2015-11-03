@@ -1,10 +1,13 @@
 ﻿using DigitalMapToDB.DigitalMapParser.Parser;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DigitalMapToDB.DigitalMapParser.Utils;
+using NPOI.Util;
 
 namespace DigitalMapToDB.DigitalMapParser
 {
@@ -53,8 +56,27 @@ namespace DigitalMapToDB.DigitalMapParser
                 }
         }
 
+        /// <summary>
+        /// 当前给定的路径是否可用
+        /// </summary>
+        /// <returns></returns>
+        public static bool isDirectoryValid(string path)
+        {
+            string[] files = Directory.GetDirectories(path);
+            ArrayList fileList = Arrays.AsList(files);
+            foreach (string str in fileList)
+            {
+                Log.Err(TAG,"当前文件是:"+ str);
+            }
+            Log.Err(TAG, "我需要的是:   "+ path + "\\text");
+            Log.Err(TAG, "我需要的是:   " + path + "\\vector");
+            if (!fileList.Contains(path+"\\text") || !fileList.Contains(path+"\\vector"))
+            {
+                return false;
+            }
+            return true;
+        }
 
- 
 
         /// <summary>
         /// 初始化文件目录

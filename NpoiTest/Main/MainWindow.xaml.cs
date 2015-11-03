@@ -40,6 +40,8 @@ namespace NpoiTest.Main
             this.menuDigitalMapToDb.Click += delegate(object sender, RoutedEventArgs args)
             {
                 DigitalMapToDbView digitalMapToDbView = new DigitalMapToDbView();
+                digitalMapToDbView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                digitalMapToDbView.ResizeMode = ResizeMode.NoResize;
                 digitalMapToDbView.Show();
             };
         }
@@ -49,12 +51,16 @@ namespace NpoiTest.Main
         /// </summary>
         private void InitView()
         {
+            //初始位置定位到中心
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.ResizeMode = ResizeMode.NoResize;
+
             //打开数据库点击事件
             btnOpenDbFile.Click += delegate
             {
                 //打开文件选择器
                 FileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "数据库文件|*.db;*.pptx|hahaha|*.docx";
+                dialog.Filter = "数据库文件|*.db";
                 dialog.ShowDialog();
                 //获取选取的文件路径
                 if (dialog.FileName == null || dialog.FileName.Length == 0)
@@ -62,19 +68,23 @@ namespace NpoiTest.Main
                     return;
                 }
                 var dbPath = dialog.FileName;
-                Console.WriteLine(dbPath);
-
-                //更新textbox的文字
-                tbDbPath.Text = dbPath;
-
-                //实例化数据库数据
-                dbData = new DbData(dbPath);
-
-                //初始化project选择框
-                initPrjSelectCombox();
-
-                //初始化下面的datagrid的table
-                initDataGrid();
+                //判断当前数据库文件是否可用
+                if (!DbData.IsDbFileValid(dbPath))
+                {
+                    System.Windows.MessageBox.Show("当前数据库文件不可用","出错");
+                    return;
+                }
+                else
+                {
+                    //更新textbox的文字
+                    tbDbPath.Text = dbPath;
+                    //实例化数据库数据
+                    dbData = new DbData(dbPath);
+                    //初始化project选择框
+                    initPrjSelectCombox();
+                    //初始化下面的datagrid的table
+                    initDataGrid();
+                }
             };
 
             //工程的ComboBox点击事件
@@ -125,7 +135,7 @@ namespace NpoiTest.Main
                 var outputPath = tbWordPath.Text;
                 if (outputPath == null || outputPath.Length == 0)
                 {
-                    System.Windows.MessageBox.Show("请先选择输出路径");
+                    System.Windows.MessageBox.Show("请先选择输出路径", "提示");
                     return;
                 }
                 //生成word文件
@@ -148,7 +158,7 @@ namespace NpoiTest.Main
                     return;
                 }
                 //生成word文件
-                new ExcelGenerator(dbData.GetSpecificDbData((string)cbPrjChoose.SelectedValue), outputPath)
+                new ExcelGenerator(dbData.GetSpecificDbData((string) cbPrjChoose.SelectedValue), outputPath)
                     .Generate();
             };
         }
