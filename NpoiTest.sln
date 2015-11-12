@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NpoiTest", "NpoiTest\NpoiTest.csproj", "{215D82C7-CD5D-4939-B3C5-CF455D6B270A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GSM数据转换工具", "NpoiTest\GSM数据转换工具.csproj", "{215D82C7-CD5D-4939-B3C5-CF455D6B270A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

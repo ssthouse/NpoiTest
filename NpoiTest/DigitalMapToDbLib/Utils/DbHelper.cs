@@ -9,11 +9,14 @@ using System.Windows;
 using Microsoft.SqlServer.Server;
 using Point = DigitalMapToDB.DigitalMapParser.MapData.Point;
 using Vector = DigitalMapToDB.DigitalMapParser.MapData.Vector;
+using System.Data.Common;
 
 namespace DigitalMapToDB.DigitalMapParser.Utils
 {
     internal class DbHelper
     {
+        private const string TAG = "DBHelper";
+
         /// <summary>
         /// 包含一个数字地图的所有数据
         /// </summary>
@@ -34,9 +37,24 @@ namespace DigitalMapToDB.DigitalMapParser.Utils
         /// <param name="path"></param>
         public void generateDbFile(String path)
         {
+            Log.Err(TAG, "我开始创建数据库文件");
             //创建一下数据库试试
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + path);
             connection.Open();
+
+
+            //尝试使用事物进行数据库操作
+//            DbTransaction trans = connection.BeginTransaction();
+//            try
+//            {
+//                //Sql语句
+//                trans.Commit(); //提交事务
+//            }
+//            catch (Exception e)
+//            {
+//                trans.Rollback(); //回滚事务
+//            }
+
             SQLiteCommand cmd = connection.CreateCommand();
             cmd.CommandText = "CREATE TABLE TextPoint(longitude REAL, latitude REAL, content TEXT)";
             cmd.ExecuteNonQuery();

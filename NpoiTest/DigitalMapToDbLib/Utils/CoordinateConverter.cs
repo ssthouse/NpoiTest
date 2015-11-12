@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace DigitalMapToDB.DigitalMapParser.Utils
 {
+    /// <summary>
+    /// 工具类:
+    /// WGS的大地坐标 转化为 经纬度
+    /// </summary>
     internal class CoordinateConverter
     {
         /// <summary>
@@ -20,9 +24,8 @@ namespace DigitalMapToDB.DigitalMapParser.Utils
             var XYtoBL = new double[2];
 
             //工程中的--------中央经线-----数据
-            //TODO---测试用
-//            double L0 = PrjConstant.getCentralLongitude();
-            double L0 = 117;
+            //TODO---这里是读取文本文件获取中央经线---有可能文本文件的数据格式有问题
+            double L0 = PrjConstant.getCentralLongitude();
 
             double Mf;
             double Nf;

@@ -98,12 +98,11 @@ namespace NpoiTest.DigitalMapDbLib.View
         }
 
         /// <summary>
-        /// 生成数据库文件
+        /// 生成数据库文件(在新线程中执行)
         /// </summary>
         private void generateDbFile()
         {
             //让progressbar显示出来
-            //this.pbDigitalMapConvert.Visibility = Visibility.Visible;
             Action<System.Windows.Controls.ProgressBar, bool> updataAction = new Action<System.Windows.Controls.ProgressBar, bool>(updataProgressBar);
             this.pbDigitalMapConvert.Dispatcher.BeginInvoke(updataAction, pbDigitalMapConvert, true);
             if (prjItem == null)

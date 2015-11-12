@@ -58,10 +58,10 @@ namespace DigitalMapToDB.DigitalMapParser.Parser
                 dataFilePathList.Add(rootPath + "\\" + args[0]);
             }
             //TODO---打印常看数据
-            foreach (string path in dataFilePathList)
-            {
-                Log.Err(TAG, path);
-            }
+//            foreach (string path in dataFilePathList)
+//            {
+//                Log.Err(TAG, path);
+//            }
         }
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace DigitalMapToDB.DigitalMapParser.Parser
                 while ((lineStr = sr.ReadLine()) != null)
                 {
                     //获取当前行单词提取出来的List<String>
-                    Log.Err(TAG, "转换之前：   "+lineStr);
+                   // Log.Err(TAG, "转换之前：   "+lineStr);
                     lineStr = Regex.Replace(lineStr, "\\s{1,}", " ");
-                    Log.Err(TAG, "：   " + lineStr);
+                    //Log.Err(TAG, "：   " + lineStr);
                     String[] args = lineStr.Split(' ');
                     List<String> strList = new List<String>();
                     foreach (string tempStr in args)
@@ -115,13 +115,15 @@ namespace DigitalMapToDB.DigitalMapParser.Parser
                 }
                 sr.Close();
                 //TODO---查看数据
-                Log.Err(TAG, "我现在---有这么多个： "+vectorList.Count);
-                foreach (Vector vector in vectorList)
-                {
-                    Log.Err(TAG, vector.ToString());
-                }
-            }
+//                Log.Err(TAG, "我现在---有这么多个： "+vectorList.Count);
+//                foreach (Vector vector in vectorList)
+//                {
+//                    Log.Err(TAG, vector.ToString());
+//                }
+                Log.Err(TAG, "完成一个vector文件的解析");
+            }//end of for each file
         }
+
         /// <summary>
         /// 获取Vecto的List
         /// </summary>

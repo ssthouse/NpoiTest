@@ -74,10 +74,10 @@ namespace DigitalMapToDB.DigitalMapParser.Parser
                 }
                 sr.Close();
                 //TODO---打印数据
-                foreach (TextPoint textPoint in textPointList)
-                {
-                    Log.Err(TAG, textPoint.ToString());
-                }
+//                foreach (TextPoint textPoint in textPointList)
+//                {
+//                    Log.Err(TAG, textPoint.ToString());
+//                }
             }
         }
 
