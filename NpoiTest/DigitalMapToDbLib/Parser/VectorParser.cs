@@ -88,19 +88,19 @@ namespace DigitalMapToDB.DigitalMapParser.Parser
                         strList.Add(tempStr);
                     }
                     //将List<String>中的空串剔除
-                    for (int i = 0; i < strList.Count; i++)
+                    for (int i=0; i<strList.Count; i++)
                     {
-                        String str = strList[i];
+                        string str = strList[i];
                         if (str.Contains(" ") || str.Length == 0)
                         {
-                            strList.RemoveAt(0);
+                            strList.RemoveAt(i);
                         }
                     }
                     //添加数据
                     if (strList.Count == 3)
                     {
-                        //添加一个新的Vector
-                        vectorList.Add(new Vector(strList[0], strList[1],strList[2]));
+                        //添加一个新的Vector---(样例数据: 3 Railway 102)  
+                        vectorList.Add(new Vector(strList[0], strList[1], strList[2]));
                     }
                     else if (strList.Count == 2)
                     {

@@ -38,44 +38,36 @@ namespace DigitalMapToDB.DigitalMapParser.Utils
         public void generateDbFile(String path)
         {
             Log.Err(TAG, "我开始创建数据库文件");
-            //创建一下数据库试试
+            //创建数据库连接---并打开连接
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + path);
             connection.Open();
 
-
-            //尝试使用事物进行数据库操作
-//            DbTransaction trans = connection.BeginTransaction();
-//            try
-//            {
-//                //Sql语句
-//                trans.Commit(); //提交事务
-//            }
-//            catch (Exception e)
-//            {
-//                trans.Rollback(); //回滚事务
-//            }
-
+            //创建Table
+            //创建TextPoint表
             SQLiteCommand cmd = connection.CreateCommand();
             cmd.CommandText = "CREATE TABLE TextPoint(longitude REAL, latitude REAL, content TEXT)";
             cmd.ExecuteNonQuery();
-            //TODO---将TextPoint写进去
-            foreach (TextPoint textPoint in prjItem.getTextParser().getTextPointList())
+            //创建Vector表表(包含一个----经纬度----一个点的order)
+            cmd.CommandText =
+                "CREATE TABLE Vector(name TEXT, longitude REAL, latitude REAL, typeInMap TEXT, orderInVector INTEGER," +
+                " id INTEGER PRIMARY KEY AUTOINCREMENT)";
+            cmd.ExecuteNonQuery();
+
+            //尝试使用事物进行数据库操作
+            DbTransaction trans = connection.BeginTransaction();
+            try
             {
-                cmd.CommandText = "INSERT INTO TextPoint VALUES " +
-                                  "("
-                                  + "'" + textPoint.getLongitude() + "', "
-                                  + "'" + textPoint.getLatitude() + "', "
-                                  + "'" + textPoint.getContent() + "'"
-                                  + ")";
-                cmd.ExecuteNonQuery();
-            }
-            {
-                //首先创建一个Vector的表
-                //包含一个----经纬度----一个点的order
-                cmd.CommandText =
-                    "CREATE TABLE Vector(name TEXT, longitude REAL, latitude REAL, orderInVector INTEGER," +
-                    " id INTEGER PRIMARY KEY AUTOINCREMENT)";
-                cmd.ExecuteNonQuery();
+                //TODO---将TextPoint写进去
+                foreach (TextPoint textPoint in prjItem.getTextParser().getTextPointList())
+                {
+                    cmd.CommandText = "INSERT INTO TextPoint VALUES " +
+                                      "("
+                                      + "'" + textPoint.getLongitude() + "', "
+                                      + "'" + textPoint.getLatitude() + "', "
+                                      + "'" + textPoint.getContent() + "'"
+                                      + ")";
+                    cmd.ExecuteNonQuery();
+                }
                 //将Vector中的数据写进去
                 foreach (Vector vector in prjItem.getVectorParser().getVectorList())
                 {
@@ -83,18 +75,26 @@ namespace DigitalMapToDB.DigitalMapParser.Utils
                     for (int i = 0; i < vector.getPointList().Count; i++)
                     {
                         Point point = vector.getPointList()[i];
-                        cmd.CommandText = "INSERT INTO Vector (name, longitude, latitude, orderInVector) "
-                                          + "VALUES "
-                                          + "("
-                                          + "'" + vector.getContent() + "', "
-                                          + "'" + point.getLongitude() + "', "
-                                          + "'" + point.getLatitude() + "', "
-                                          + "'" + i + "'"
-                                          + ")";
+                        cmd.CommandText = "INSERT INTO Vector (name, longitude, latitude, typeInMap, orderInVector) "
+                                            + "VALUES "
+                                            + "("
+                                            + "'" + vector.getContent() + "', "
+                                            + "'" + point.getLongitude() + "', "
+                                            + "'" + point.getLatitude() + "', "
+                                            + "'" + vector.TypeInMap + "', "
+                                            + "'" + i + "'"
+                                            + ")";
                         cmd.ExecuteNonQuery();
                     }
                 }
+                //提交事务
+                trans.Commit(); 
             }
+            catch (Exception e)
+            {
+                trans.Rollback(); //回滚事务
+            }
+
             //释放资源
             cmd.Dispose();
             connection.Close();
