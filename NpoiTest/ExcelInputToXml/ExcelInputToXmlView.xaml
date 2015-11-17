@@ -1,0 +1,33 @@
+﻿<Window x:Class="NpoiTest.ExcelInputToXml.ExcelInputToXmlView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NpoiTest.ExcelInputToXml"
+        mc:Ignorable="d"
+        Title="ExcelInputToXml" Height="240" Width="340">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="340" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="10, 30, 10, 10" Grid.Column="0" Orientation="Vertical">
+
+            <StackPanel Height="26" Orientation="Horizontal" Margin="10, 10, 10, 10">
+                <TextBlock VerticalAlignment="Center" FontSize="14" Margin="0, 0, 10, 0" Text="     Excel路径:"></TextBlock>
+                <TextBox FontSize="14" Name="tboxExcelFilePath" Width="160" />
+                <Button FontSize="14" Name="btnChooseExcelFile" Content="..." Margin="10, 0, 10, 0" />
+            </StackPanel>
+
+            <StackPanel Height="26" Orientation="Horizontal" Margin="10, 10, 10, 10">
+                <TextBlock VerticalAlignment="Center" FontSize="14" Margin="0, 0, 10, 0">输出文件路径:</TextBlock>
+                <TextBox FontSize="14" Name="tboxOutputPath" Width="160" />
+                <Button FontSize="14" Name="btnChooseOutputPath" Content="..." Margin="10, 0, 10, 0" />
+            </StackPanel>
+
+            <Button FontSize="14" Name="btnGenerateXmlFile" Height="26" Content="生成Xml文件" Margin="10, 10, 10, 0" />
+
+            <ProgressBar Visibility="Hidden" Name="pbDigitalMapConvert" IsIndeterminate="True" Height="20" Margin="10, 10, 10, 0"></ProgressBar>
+        </StackPanel>
+    </Grid>
+</Window>

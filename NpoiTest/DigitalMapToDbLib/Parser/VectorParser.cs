@@ -71,6 +71,7 @@ namespace DigitalMapToDB.DigitalMapParser.Parser
         {
             foreach (string path in dataFilePathList)
             {
+                Log.Err(TAG, "当前解析的文件是: "+path);
                 //获取当前文件
                 StreamReader sr = new StreamReader(path, Encoding.Default);
                 //一行行的读

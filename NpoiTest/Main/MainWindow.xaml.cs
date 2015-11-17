@@ -3,7 +3,9 @@ using NpoiTest.Office.Word;
 using System;
 using System.Windows;
 using System.Windows.Forms;
+using DigitalMapToDB.DigitalMapParser.Utils;
 using NpoiTest.DigitalMapDbLib.View;
+using NpoiTest.ExcelInputToXml;
 
 namespace NpoiTest.Main
 {
@@ -13,6 +15,8 @@ namespace NpoiTest.Main
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string TAG = "MainWIindow";
+
         /// <summary>
         ///     唯一的数据库数据
         /// </summary>
@@ -30,6 +34,10 @@ namespace NpoiTest.Main
 
             //初始化MenuItem的相应时间
             InitMenuItem();
+
+            //TODO
+            double [] result = CoordinateConverter.UTMWGSXYtoBL(3379160.647545, 475096.362006);
+            Log.Err(TAG, ""+result[0]+"     "+result[1]);
         }
 
         /// <summary>
@@ -37,12 +45,22 @@ namespace NpoiTest.Main
         /// </summary>
         private void InitMenuItem()
         {
+            //数字地图转换为数据库的menu调用
             this.menuDigitalMapToDb.Click += delegate(object sender, RoutedEventArgs args)
             {
                 DigitalMapToDbView digitalMapToDbView = new DigitalMapToDbView();
                 digitalMapToDbView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 digitalMapToDbView.ResizeMode = ResizeMode.NoResize;
                 digitalMapToDbView.Show();
+            };
+
+            //Excel输入文件转换为xml输出文件
+            this.menuExcelInputToXml.Click += delegate(object sender, RoutedEventArgs args)
+            {
+                ExcelInputToXmlView excelInputToXmlView = new ExcelInputToXmlView();
+                excelInputToXmlView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                excelInputToXmlView.ResizeMode = ResizeMode.NoResize;
+                excelInputToXmlView.Show();
             };
         }
 

@@ -12,6 +12,7 @@
             <MenuItem Name="menuTools" Header="  工具" Height="24" FontSize="14" Width="60" 
                       HorizontalContentAlignment="Right" HorizontalAlignment="Center">
                 <MenuItem Name="menuDigitalMapToDb" Header="数字地图转数据库"></MenuItem>
+                <MenuItem Name="menuExcelInputToXml" Header="Excel输入文件转xml文件"></MenuItem>
             </MenuItem>
         </Menu>
         
