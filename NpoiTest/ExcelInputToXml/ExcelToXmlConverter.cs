@@ -155,7 +155,6 @@ namespace NpoiTest.ExcelInputToXml
             save.AppendChild(decl);
             save.AppendChild(Xmldata);
             //输出文件
-            //save.Save(outputPath);
             save.Save(outputPath);
         }
     }

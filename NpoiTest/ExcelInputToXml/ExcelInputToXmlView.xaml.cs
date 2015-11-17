@@ -79,11 +79,11 @@ namespace NpoiTest.ExcelInputToXml
                 if (excelToXmlConverter != null && outputPath != null)
                 {
                     excelToXmlConverter.ExportXmlFile(outputPath);
-                    MessageBox.Show("提示", "文件生成完毕");
+                    MessageBox.Show("文件生成完毕", "提示");
                 }
                 else
                 {
-                    MessageBox.Show("提示", "请先选择输入输出路径");
+                    MessageBox.Show("请先选择输入输出路径", "提示");
                 }
             };
         }
