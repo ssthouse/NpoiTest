@@ -18,6 +18,11 @@ namespace NpoiTest.ExcelInputToXml
         private const double OFFSET = 0.00002;
 
         /// <summary>
+        /// 输出的xml文件中的属性
+        /// </summary>
+        private const string ATTRIBUTE_VALUE = "value";
+
+        /// <summary>
         /// 保存从Excel中解析出来的数据
         /// </summary>
         private List<Data> dataList = new List<Data>();
@@ -125,7 +130,7 @@ namespace NpoiTest.ExcelInputToXml
         {
             XmlDocument save = new XmlDocument();
             XmlDeclaration decl = save.CreateXmlDeclaration("1.0", "utf-8", "");
-            XmlElement Xmldata = save.CreateElement("data");
+            XmlElement xmlData = save.CreateElement("data");
             for (int i = 0; i < dataList.Count; i++)
             {
                 if (dataList[i].Devicetype != "")
@@ -135,25 +140,30 @@ namespace NpoiTest.ExcelInputToXml
                     XmlElement lateral = save.CreateElement("lateral");
                     XmlElement longitude = save.CreateElement("longtitude");
                     XmlElement latitude = save.CreateElement("latitude");
-                    devicetype.InnerText = dataList[i].Devicetype;
-                    kmmark.InnerText = dataList[i].Kmmark;
-                    lateral.InnerText = dataList[i].Lateral;
+                    //将数据写在 "value" 属性中
+                    devicetype.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Devicetype);
+                    kmmark.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Kmmark);
+                    lateral.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Lateral);
+                    //kmmark.InnerText = dataList[i].Kmmark;
+                    //lateral.InnerText = dataList[i].Lateral;
                     if (!(dataList[i].Longitude == "" || dataList[i].Latitude == ""))
                     {
-                        longitude.InnerText = dataList[i].Longitude;
-                        latitude.InnerText = dataList[i].Latitude;
+                        longitude.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Longitude);
+                        latitude.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Latitude);
+                        //longitude.InnerText = dataList[i].Longitude;
+                        //latitude.InnerText = dataList[i].Latitude;
                     }
-
+                    //添加子标签
                     devicetype.AppendChild(kmmark);
                     devicetype.AppendChild(lateral);
                     devicetype.AppendChild(longitude);
                     devicetype.AppendChild(latitude);
-
-                    Xmldata.AppendChild(devicetype);
+                    //添加一个数据根标签
+                    xmlData.AppendChild(devicetype);
                 }
             }
             save.AppendChild(decl);
-            save.AppendChild(Xmldata);
+            save.AppendChild(xmlData);
             //输出文件
             save.Save(outputPath);
         }
