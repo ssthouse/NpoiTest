@@ -18,12 +18,12 @@ namespace NpoiTest.Main
         private const string TAG = "MainWIindow";
 
         /// <summary>
-        ///     唯一的数据库数据
+        /// 数据库数据
         /// </summary>
         private DbData dbData;
 
         /// <summary>
-        ///     入口方法
+        /// 入口方法
         /// </summary>
         public MainWindow()
         {
@@ -31,13 +31,8 @@ namespace NpoiTest.Main
 
             //初始化View---以及点击事件
             InitView();
-
             //初始化MenuItem的相应时间
             InitMenuItem();
-
-            //TODO
-            double [] result = CoordinateConverter.UTMWGSXYtoBL(3379160.647545, 475096.362006);
-            Log.Err(TAG, ""+result[0]+"     "+result[1]);
         }
 
         /// <summary>
@@ -65,7 +60,7 @@ namespace NpoiTest.Main
         }
 
         /// <summary>
-        ///     初始化View
+        /// 初始化View
         /// </summary>
         private void InitView()
         {
@@ -89,7 +84,7 @@ namespace NpoiTest.Main
                 //判断当前数据库文件是否可用
                 if (!DbData.IsDbFileValid(dbPath))
                 {
-                    System.Windows.MessageBox.Show("当前数据库文件不可用","出错");
+                    System.Windows.MessageBox.Show("当前数据库文件不可用", "出错");
                     return;
                 }
                 else
@@ -182,7 +177,7 @@ namespace NpoiTest.Main
         }
 
         /// <summary>
-        ///     初始化project选择框
+        /// 初始化project选择框
         /// </summary>
         private void initPrjSelectCombox()
         {

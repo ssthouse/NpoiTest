@@ -15,11 +15,19 @@ namespace NpoiTest.Model.Database
     {
         private const string TAG = "DbData";
 
-        /// <summary>
-        /// 数据库中的表名
-        /// </summary>
-        private const string TABLE_PROJECT = "Projects";
-        private const string TABLE_MARKER = "Markers";
+        private class DbCons
+        {
+            //数据库中的表名
+            public const string TABLE_PROJECT = "Projects";
+            public const string TABLE_MARKER = "Markers";
+            //Marker表的列名
+            public const string COLUMN_PRJNAME = "prjName";
+            public const string COLUMN_KILOMETER_MARK = "kilometer_mark";
+            public const string COLUMN_SIDE_DIRECTION = "side_direction";
+            public const string COLUMN_LONGITUDE = "longitude";
+            public const string COLUMN_LATITUDE = "latitude";
+            public const string COLUMN_DEVICE_TYPE = "device_type";
+        }
 
         //唯一的数据库连接
         private SQLiteConnection connection;
@@ -33,7 +41,7 @@ namespace NpoiTest.Model.Database
             //首先判断数据库文件是否存在
             if (File.Exists(dbPath))
             {
-                connection = new SQLiteConnection("Data Source="+dbPath);
+                connection = new SQLiteConnection("Data Source=" + dbPath);
                 connection.Open();
             }
             else
@@ -46,13 +54,13 @@ namespace NpoiTest.Model.Database
         /// 指定的数据库文件是否可用
         /// </summary>
         /// <returns></returns>
-        public static  bool IsDbFileValid(string dbPath)
+        public static bool IsDbFileValid(string dbPath)
         {
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + dbPath);
             connection.Open();
             SQLiteCommand readTableCmd = connection.CreateCommand();
             readTableCmd.CommandText = "SELECT name FROM sqlite_master WHERE TYPE='table'";
-           SQLiteDataReader reader =  readTableCmd.ExecuteReader();
+            SQLiteDataReader reader = readTableCmd.ExecuteReader();
             List<string> tableList = new List<string>();
             while (reader.Read())
             {
@@ -60,7 +68,7 @@ namespace NpoiTest.Model.Database
                 Log.Err(TAG, reader.GetString(0));
             }
             //如果不包含这几个表名---返回false
-            if (!tableList.Contains(TABLE_PROJECT) || !tableList.Contains(TABLE_MARKER))
+            if (!tableList.Contains(DbCons.TABLE_PROJECT) || !tableList.Contains(DbCons.TABLE_MARKER))
             {
                 connection.Close();
                 return false;
@@ -101,7 +109,9 @@ namespace NpoiTest.Model.Database
             List<DbBean> list = new List<DbBean>();
             while (reader.Read())
             {
-                list.Add(new DbBean(reader.GetString(0), reader.GetDouble(1), reader.GetDouble(2)));
+                list.Add(new DbBean(reader[DbCons.COLUMN_PRJNAME] + "", reader[DbCons.COLUMN_KILOMETER_MARK] + "",
+                   reader[DbCons.COLUMN_SIDE_DIRECTION] + "", reader.GetDouble(4),
+                   reader.GetDouble(5), reader[DbCons.COLUMN_DEVICE_TYPE] + ""));
             }
             return list;
         }
@@ -115,13 +125,15 @@ namespace NpoiTest.Model.Database
         {
             //读取所有的Markers表中的数据
             SQLiteCommand readCmd = connection.CreateCommand();
-            readCmd.CommandText = "SELECT * FROM Markers WHERE prjName="+"'"+prjName+"'";
+            readCmd.CommandText = "SELECT * FROM Markers WHERE prjName=" + "'" + prjName + "'";
             SQLiteDataReader reader = readCmd.ExecuteReader();
             //将数据填充到List中
             List<DbBean> list = new List<DbBean>();
             while (reader.Read())
             {
-                list.Add(new DbBean(reader.GetString(0), reader.GetDouble(1), reader.GetDouble(2)));
+                list.Add(new DbBean(reader[DbCons.COLUMN_PRJNAME] + "", reader[DbCons.COLUMN_KILOMETER_MARK] + "",
+                    reader[DbCons.COLUMN_SIDE_DIRECTION] + "", reader.GetDouble(4),
+                    reader.GetDouble(5), reader[DbCons.COLUMN_DEVICE_TYPE] + ""));
             }
             return list;
         }

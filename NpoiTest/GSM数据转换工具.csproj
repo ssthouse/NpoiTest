@@ -185,11 +185,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Database\DbBean.cs" />
-    <Compile Include="Model\Database\DbData.cs" />
-    <Compile Include="Office\Word\ExcelGenerator.cs" />
-    <Compile Include="Office\Word\WordGenerator.cs" />
-    <Compile Include="Office\Word\WordTest.cs" />
+    <Compile Include="Main\Model\Database\DbBean.cs" />
+    <Compile Include="Main\Model\Database\DbData.cs" />
+    <Compile Include="Main\Office\Word\ExcelGenerator.cs" />
+    <Compile Include="Main\Office\Word\WordGenerator.cs" />
+    <Compile Include="Main\Office\Word\WordTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
