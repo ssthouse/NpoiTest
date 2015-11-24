@@ -40,11 +40,10 @@ namespace NpoiTest.ExcelInputToXml
         public ExcelToXmlConverter(string filePath)
         {
             this.filePath = filePath;
-
             //解析文件
             parseExcel();
             //检查空格
-            checkspace();
+            //checkspace();
         }
 
         /// <summary>
@@ -66,11 +65,14 @@ namespace NpoiTest.ExcelInputToXml
             {
                 IRow row = sheet.GetRow(i);
                 Data data = new Data();
+                //填充数据
                 data.Devicetype = row.GetCell(1).ToString();
                 data.Kmmark = row.GetCell(2).ToString();
                 data.Lateral = row.GetCell(3).ToString();
-                data.Longitude = row.GetCell(4).ToString();
-                data.Latitude = row.GetCell(5).ToString();
+                data.DistanceToRail = row.GetCell(4).ToString();
+                data.Longitude = row.GetCell(5).ToString();
+                data.Latitude = row.GetCell(6).ToString();
+                data.Comment = row.GetCell(7).ToString();
                 dataList.Add(data);
             }
         }
@@ -135,29 +137,32 @@ namespace NpoiTest.ExcelInputToXml
             {
                 if (dataList[i].Devicetype != "")
                 {
+                    //创建标签对
                     XmlElement devicetype = save.CreateElement("devicetype");
                     XmlElement kmmark = save.CreateElement("kmmark");
                     XmlElement lateral = save.CreateElement("lateral");
+                    XmlElement distanceToRail = save.CreateElement("distanceToRail");
                     XmlElement longitude = save.CreateElement("longtitude");
                     XmlElement latitude = save.CreateElement("latitude");
+                    XmlElement comment = save.CreateElement("comment");
                     //将数据写在 "value" 属性中
                     devicetype.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Devicetype);
                     kmmark.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Kmmark);
                     lateral.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Lateral);
-                    //kmmark.InnerText = dataList[i].Kmmark;
-                    //lateral.InnerText = dataList[i].Lateral;
+                    distanceToRail.SetAttribute(ATTRIBUTE_VALUE, dataList[i].DistanceToRail);
+                    comment.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Comment);
                     if (!(dataList[i].Longitude == "" || dataList[i].Latitude == ""))
                     {
                         longitude.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Longitude);
                         latitude.SetAttribute(ATTRIBUTE_VALUE, dataList[i].Latitude);
-                        //longitude.InnerText = dataList[i].Longitude;
-                        //latitude.InnerText = dataList[i].Latitude;
                     }
                     //添加子标签
                     devicetype.AppendChild(kmmark);
                     devicetype.AppendChild(lateral);
+                    devicetype.AppendChild(distanceToRail);
                     devicetype.AppendChild(longitude);
                     devicetype.AppendChild(latitude);
+                    devicetype.AppendChild(comment);
                     //添加一个数据根标签
                     xmlData.AppendChild(devicetype);
                 }

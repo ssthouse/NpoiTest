@@ -8,75 +8,19 @@ namespace NpoiTest.ExcelInputToXml
 {
     class Data
     {
-        private String devicetype;
-        private String kmmark;
-        private String lateral;
-        private String longitude;
-        private String latitude;
-
-        public string Devicetype
-        {
-            get
-            {
-                return devicetype;
-            }
-
-            set
-            {
-                devicetype = value;
-            }
-        }
-
-        public string Kmmark
-        {
-            get
-            {
-                return kmmark;
-            }
-
-            set
-            {
-                kmmark = value;
-            }
-        }
-
-        public string Lateral
-        {
-            get
-            {
-                return lateral;
-            }
-
-            set
-            {
-                lateral = value;
-            }
-        }
-
-        public string Longitude
-        {
-            get
-            {
-                return longitude;
-            }
-
-            set
-            {
-                longitude = value;
-            }
-        }
-
-        public string Latitude
-        {
-            get
-            {
-                return latitude;
-            }
-
-            set
-            {
-                latitude = value;
-            }
-        }
+        //设备类型
+        public string Devicetype { get; set; }
+        //公里标
+        public string Kmmark { get; set; }
+        //侧向
+        public string Lateral { get; set; }
+        //距线路中心距离
+        public string DistanceToRail { get; set; }
+        //经度
+        public string Longitude { get; set; }
+        //纬度
+        public string Latitude { get; set; }
+        //备注文本
+        public string Comment { get; set; }
     }
 }
