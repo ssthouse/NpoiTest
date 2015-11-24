@@ -24,6 +24,8 @@ namespace NpoiTest.Model.Database
         public string KilometerMark { get; set; }
         //侧向
         public string SideDirection { get; set; }
+        //照片路径
+        public string PhotoPathName { get; set; }
 
         public DbBean()
         {
@@ -36,9 +38,13 @@ namespace NpoiTest.Model.Database
         /// 传入三个关键数据的构造方法
         /// </summary>
         /// <param name="prjName"></param>
+        /// <param name="kilometerMark"></param>
+        /// <param name="sideDirection"></param>
         /// <param name="longitude"></param>
         /// <param name="latitude"></param>
-        public DbBean(string prjName, string kilometerMark, string sideDirection, double longitude, double latitude, string deviceType)
+        /// <param name="deviceType"></param>
+        /// <param name="photoPathName"></param>
+        public DbBean(string prjName, string kilometerMark, string sideDirection, double longitude, double latitude, string deviceType, string photoPathName)
         {
             PrjName = prjName;
             Longitude = longitude + "";
@@ -46,6 +52,7 @@ namespace NpoiTest.Model.Database
             DeviceType = deviceType;
             KilometerMark = kilometerMark;
             SideDirection = sideDirection;
+            PhotoPathName = photoPathName;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Windows;
 using DigitalMapToDB.DigitalMapParser.Utils;
+using ICSharpCode.SharpZipLib.Zip;
 
 namespace NpoiTest.Model.Database
 {
@@ -27,27 +28,47 @@ namespace NpoiTest.Model.Database
             public const string COLUMN_LONGITUDE = "longitude";
             public const string COLUMN_LATITUDE = "latitude";
             public const string COLUMN_DEVICE_TYPE = "device_type";
+            public const string COLUMN_PHOTO_PATH_NAME = "photoPathName";
         }
 
         //唯一的数据库连接
         private SQLiteConnection connection;
+        private const string DATABASE_PATH = ".\\Picture\\Location.db";
 
         /// <summary>
         ///     传入数据库路径的构造方法
         /// </summary>
-        /// <param name="dbPath"></param>
-        public DbData(string dbPath)
+        /// <param name="zipFilePath"></param>
+        public DbData(string zipFilePath)
         {
+            //首先把文件解压
+            file_unzip(zipFilePath, ".\\");
             //首先判断数据库文件是否存在
-            if (File.Exists(dbPath))
+            if (File.Exists(DATABASE_PATH))
             {
-                connection = new SQLiteConnection("Data Source=" + dbPath);
+                connection = new SQLiteConnection("Data Source=" + DATABASE_PATH);
                 connection.Open();
             }
             else
             {
-                MessageBox.Show("数据库文件不存在");
+                MessageBox.Show("压缩文件不存在");
             }
+        }
+
+        /// <summary>
+        /// 解压文件
+        /// </summary>
+        /// <param name="fileToUnZip">解压文件目录</param>
+        /// <param name="zipedFolder">解压到哪里</param>
+        private static void file_unzip(string fileToUnZip, string zipedFolder)
+        {
+            //如果存在文件夹则删除
+            if (Directory.Exists(".\\Picture"))
+                Directory.Delete(".\\Picture", true);
+            //解压文件
+            FastZip fastZip = new FastZip();
+            //fastZip.Password = null; // 压缩密码。null表示无密码。""也是一种密码。 
+            fastZip.ExtractZip(fileToUnZip, zipedFolder, "");
         }
 
         /// <summary>
@@ -110,8 +131,9 @@ namespace NpoiTest.Model.Database
             while (reader.Read())
             {
                 list.Add(new DbBean(reader[DbCons.COLUMN_PRJNAME] + "", reader[DbCons.COLUMN_KILOMETER_MARK] + "",
-                   reader[DbCons.COLUMN_SIDE_DIRECTION] + "", reader.GetDouble(4),
-                   reader.GetDouble(5), reader[DbCons.COLUMN_DEVICE_TYPE] + ""));
+                    reader[DbCons.COLUMN_SIDE_DIRECTION] + "", reader.GetDouble(4),
+                    reader.GetDouble(5), reader[DbCons.COLUMN_DEVICE_TYPE] + "",
+                    reader[DbCons.COLUMN_PHOTO_PATH_NAME] + ""));
             }
             return list;
         }
@@ -133,7 +155,8 @@ namespace NpoiTest.Model.Database
             {
                 list.Add(new DbBean(reader[DbCons.COLUMN_PRJNAME] + "", reader[DbCons.COLUMN_KILOMETER_MARK] + "",
                     reader[DbCons.COLUMN_SIDE_DIRECTION] + "", reader.GetDouble(4),
-                    reader.GetDouble(5), reader[DbCons.COLUMN_DEVICE_TYPE] + ""));
+                    reader.GetDouble(5), reader[DbCons.COLUMN_DEVICE_TYPE] + "",
+                    reader[DbCons.COLUMN_PHOTO_PATH_NAME] + ""));
             }
             return list;
         }

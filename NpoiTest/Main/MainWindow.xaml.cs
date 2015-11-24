@@ -68,12 +68,12 @@ namespace NpoiTest.Main
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize;
 
-            //打开数据库点击事件
+            //打开zip文件点击事件
             btnOpenDbFile.Click += delegate
             {
                 //打开文件选择器
                 FileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "数据库文件|*.db";
+                dialog.Filter = "zip文件|*.zip";
                 dialog.ShowDialog();
                 //获取选取的文件路径
                 if (dialog.FileName == null || dialog.FileName.Length == 0)
@@ -81,23 +81,14 @@ namespace NpoiTest.Main
                     return;
                 }
                 var dbPath = dialog.FileName;
-                //判断当前数据库文件是否可用
-                if (!DbData.IsDbFileValid(dbPath))
-                {
-                    System.Windows.MessageBox.Show("当前数据库文件不可用", "出错");
-                    return;
-                }
-                else
-                {
-                    //更新textbox的文字
-                    tbDbPath.Text = dbPath;
-                    //实例化数据库数据
-                    dbData = new DbData(dbPath);
-                    //初始化project选择框
-                    initPrjSelectCombox();
-                    //初始化下面的datagrid的table
-                    initDataGrid();
-                }
+                //更新textbox的文字
+                tbDbPath.Text = dbPath;
+                //实例化数据库数据
+                dbData = new DbData(dbPath);
+                //初始化project选择框
+                initPrjSelectCombox();
+                //初始化下面的datagrid的table
+                initDataGrid();
             };
 
             //工程的ComboBox点击事件
@@ -113,12 +104,10 @@ namespace NpoiTest.Main
                 //打开文件保存对话框
                 var dialog = new SaveFileDialog();
                 dialog.Filter = "word文件|*.docx";
-                dialog.ShowDialog();
                 //获取得到的path
-                var path = dialog.FileName;
-                if (path != null && path.Length != 0)
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    tbWordPath.Text = path;
+                    tbWordPath.Text = dialog.FileName;
                 }
             };
 
@@ -128,12 +117,9 @@ namespace NpoiTest.Main
                 //打开文件保存对话框
                 var dialog = new SaveFileDialog();
                 dialog.Filter = "excel文件|*.xls";
-                dialog.ShowDialog();
-                //获取得到的path
-                var path = dialog.FileName;
-                if (path != null && path.Length != 0)
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    tbExcelPath.Text = path;
+                    tbExcelPath.Text = dialog.FileName;
                 }
             };
 
@@ -142,7 +128,7 @@ namespace NpoiTest.Main
             {
                 if (dbData == null)
                 {
-                    System.Windows.MessageBox.Show("请先选择一个数据库文件", "提示");
+                    System.Windows.MessageBox.Show("请先选择一个zip文件", "提示");
                     return;
                 }
                 var outputPath = tbWordPath.Text;
@@ -152,8 +138,9 @@ namespace NpoiTest.Main
                     return;
                 }
                 //生成word文件
-                new WordGenerator(dbData.GetSpecificDbData((string) cbPrjChoose.SelectedValue), outputPath)
-                    .Generate();
+                WordGenerator.word_creat_one(dbData.GetSpecificDbData((string) cbPrjChoose.SelectedValue),
+                    tbWordPath.Text);
+                System.Windows.MessageBox.Show("Word文件生成完毕");
             };
 
             //Excel输出监听事件

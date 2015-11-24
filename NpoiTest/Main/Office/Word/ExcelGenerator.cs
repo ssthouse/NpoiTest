@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using NpoiTest.Model.Database;
+using NPOI.HSSF.Record.CF;
 using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using HorizontalAlignment = NPOI.SS.UserModel.HorizontalAlignment;
 
 namespace NpoiTest.Office.Word
 {
@@ -15,7 +18,7 @@ namespace NpoiTest.Office.Word
         /// <summary>
         /// 数据源
         /// </summary>
-        private readonly List<DbBean> dataList;
+        private readonly List<Model.Database.DbBean> dataList;
         /// <summary>
         /// Excel输出路径
         /// </summary>
@@ -26,7 +29,7 @@ namespace NpoiTest.Office.Word
         /// </summary>
         /// <param name="dataList">需要导出的数据</param>
         /// <param name="outputPath">输出路径</param>
-        public ExcelGenerator(List<DbBean> dataList, string outputPath)
+        public ExcelGenerator(List<Model.Database.DbBean> dataList, string outputPath)
         {
             this.dataList = dataList;
             this.outputPath = outputPath;
@@ -48,9 +51,9 @@ namespace NpoiTest.Office.Word
                 sheet.CreateRow(i);
             }
             //创建表头
-            GenerateHeaderRow(sheet);
+            GenerateHeaderRow(workbook, sheet);
             //然后给每行---创建单元格---添加数据
-            GenerateDataRow(sheet);
+            GenerateDataRow(workbook, sheet);
             try
             {
                 //获取目标文件流--写入文件数据
@@ -74,60 +77,140 @@ namespace NpoiTest.Office.Word
         /// <summary>
         /// 创建Excel的表头
         /// </summary>
-        private void GenerateHeaderRow(HSSFSheet sheet)
+        private void GenerateHeaderRow(HSSFWorkbook workbook, HSSFSheet sheet)
         {
             //获取第一行
             HSSFRow row = (HSSFRow)sheet.GetRow(0);
-            //填入数据
-            row.CreateCell(0).SetCellValue("序号");
-            row.CreateCell(1).SetCellValue("设备类型");
-            row.CreateCell(2).SetCellValue("公里标");
-            row.CreateCell(3).SetCellValue("侧向");
-            row.CreateCell(4).SetCellValue("经度");
-            row.CreateCell(5).SetCellValue("纬度");
-            row.CreateCell(6).SetCellValue("备注文本");
+            string[] columns= { "序号", "设备类型", "公里标" , "侧向", "经度" , "纬度", "备注文本"};
+            for (int i = 0; i < 6; i++)
+            {
+                ICell cell = row.CreateCell(i);
+                cell.SetCellValue(columns[i]);
+                //cell.CellStyle.ShrinkToFit = true;
+                InitHeaderCellStyle(workbook, cell);
+            }
+        }
+
+        /// <summary>
+        /// 初始化Header的style
+        /// </summary>
+        /// <param name="cell"></param>
+        private void InitHeaderCellStyle(HSSFWorkbook workbook, ICell cell)
+        {
+            ICellStyle cellStyle = cell.CellStyle;
+            //横向对齐
+            cellStyle.Alignment = HorizontalAlignment.Center;
+            //字体大小
+            IFont font = workbook.CreateFont();
+            font.FontHeightInPoints = 11;
+            font.FontName = "宋体";
+            font.Boldweight = 1;
+            cellStyle.SetFont(font);
+            //填充style
+            cell.CellStyle = cellStyle;
         }
 
         /// <summary>
         /// 创建数据行
         /// </summary>
         /// <param name="sheet"></param>
-        private void GenerateDataRow(HSSFSheet sheet)
+        private void GenerateDataRow(HSSFWorkbook workbook, HSSFSheet sheet)
         {
             for (var i = 1; i < dataList.Count; i++)
             {
                 var row = (HSSFRow)sheet.GetRow(i);
-                DbBean dbBean = dataList[i - 1];
+                Model.Database.DbBean dbBean = dataList[i - 1];
                 //序号
-                row.CreateCell(0).SetCellValue(i);
+                ICell cell0 = row.CreateCell(0);
+                cell0.SetCellValue(i);
+                cell0.CellStyle.ShrinkToFit = true;
+                InitDataCellStyle(workbook, cell0);
                 //设备类型
-                row.CreateCell(1).SetCellValue(dbBean.DeviceType);
+                cell0 = row.CreateCell(1);
+                cell0.SetCellValue(dbBean.DeviceType);
+                cell0.CellStyle.ShrinkToFit = true;
+                InitDataCellStyle(workbook, cell0);
                 //公里标
-                row.CreateCell(2).SetCellValue(dbBean.KilometerMark);
+                cell0 = row.CreateCell(2);
+                cell0.SetCellValue(dbBean.KilometerMark);
+                cell0.CellStyle.ShrinkToFit = true;
+                InitDataCellStyle(workbook, cell0);
                 //侧向
-                row.CreateCell(3).SetCellValue(dbBean.SideDirection);
+                cell0 = row.CreateCell(3);
+                cell0.SetCellValue(dbBean.SideDirection);
+                cell0.CellStyle.ShrinkToFit = true;
+                InitDataCellStyle(workbook, cell0);
                 //经度
                 double temp;
                 if (double.TryParse(dataList[i].Longitude, out temp))
                 {
-                    row.CreateCell(4).SetCellValue(Double.Parse((dataList[i].Longitude)));
+                    cell0 = row.CreateCell(4);
+                    cell0.SetCellValue(Double.Parse((dataList[i].Longitude)));
+                    cell0.CellStyle.ShrinkToFit = true;
+                    InitDataCellNumStyle(workbook, cell0);
                 }
                 else
                 {
-                    row.CreateCell(4).SetCellValue((dataList[i].Longitude));
+                    cell0 = row.CreateCell(4);
+                    cell0.SetCellValue((dataList[i].Longitude));
+                    cell0.CellStyle.ShrinkToFit = true;
+                    InitDataCellNumStyle(workbook, cell0);
                 }
                 //纬度
                 if (double.TryParse(dataList[i].Latitude, out temp))
                 {
-                    row.CreateCell(5).SetCellValue(double.Parse(dataList[i].Latitude));
+                    cell0 = row.CreateCell(5);
+                    cell0.SetCellValue(double.Parse(dataList[i].Latitude));
+                    cell0.CellStyle.ShrinkToFit = true;
+                    InitDataCellNumStyle(workbook, cell0);
                 }
                 else
                 {
-                    row.CreateCell(5).SetCellValue(dataList[i].Latitude);
+                    cell0 = row.CreateCell(5);
+                    cell0.SetCellValue(dataList[i].Latitude);
+                    cell0.CellStyle.ShrinkToFit = true;
+                    InitDataCellNumStyle(workbook, cell0);
                 }
                 //备注文本
                 row.CreateCell(6).SetCellValue("备注文本");
             }
+        }
+
+        /// <summary>
+        /// 初始化数据Cell的style
+        /// </summary>
+        /// <param name="workbook"></param>
+        /// <param name="cell"></param>
+        private void InitDataCellStyle(HSSFWorkbook workbook, ICell cell)
+        {
+            ICellStyle cellStyle = cell.CellStyle;
+            //横向对齐
+            cellStyle.Alignment = HorizontalAlignment.Center;
+            //字体大小
+            IFont font = workbook.CreateFont();
+            font.FontHeightInPoints = 11;
+            font.FontName = "宋体";
+            cellStyle.SetFont(font);
+            //填充style
+            cell.CellStyle = cellStyle;
+        }
+
+        /// <summary>
+        /// 初始化数据Cell为数字的style
+        /// </summary>
+        /// <param name="workbook"></param>
+        /// <param name="cell"></param>
+        private void InitDataCellNumStyle(HSSFWorkbook workbook, ICell cell)
+        {
+            ICellStyle cellStyle = cell.CellStyle;
+            //横向对齐
+            //cellStyle.Alignment = HorizontalAlignment.Center;
+            //字体大小
+//            IFont font = workbook.CreateFont();
+//            font.FontHeightInPoints = 11;
+//            cellStyle.SetFont(font);
+            //填充style
+            //cell.CellStyle = cellStyle;
         }
     }
 }
