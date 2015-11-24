@@ -48,9 +48,9 @@ namespace DigitalMapToDB.DigitalMapParser.MapData
             this.typeInMap = typeInMap;
             this.number = number;
             pointList = new List<Point>();
-            Log.Err(TAG, "我的typeInMap是: "+typeInMap);
-            Log.Err(TAG, "number: " + number);
-            Log.Err(TAG, "code: " + code);
+            //Log.Err(TAG, "我的typeInMap是: "+typeInMap);
+            //.Err(TAG, "number: " + number);
+            //Log.Err(TAG, "code: " + code);
         }
 
         /// <summary>

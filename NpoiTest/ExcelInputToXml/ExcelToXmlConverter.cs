@@ -142,7 +142,7 @@ namespace NpoiTest.ExcelInputToXml
                     XmlElement kmmark = save.CreateElement("kmmark");
                     XmlElement lateral = save.CreateElement("lateral");
                     XmlElement distanceToRail = save.CreateElement("distanceToRail");
-                    XmlElement longitude = save.CreateElement("longtitude");
+                    XmlElement longitude = save.CreateElement("longitude");
                     XmlElement latitude = save.CreateElement("latitude");
                     XmlElement comment = save.CreateElement("comment");
                     //将数据写在 "value" 属性中

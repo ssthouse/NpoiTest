@@ -49,7 +49,7 @@ namespace DigitalMapToDB.DigitalMapParser.Utils
             cmd.ExecuteNonQuery();
             //创建Vector表表(包含一个----经纬度----一个点的order)
             cmd.CommandText =
-                "CREATE TABLE Vector(name TEXT, longitude REAL, latitude REAL, typeInMap TEXT, orderInVector INTEGER," +
+                "CREATE TABLE Vector(name TEXT, longitude REAL, latitude REAL, orderInVector INTEGER," +
                 " id INTEGER PRIMARY KEY AUTOINCREMENT)";
             cmd.ExecuteNonQuery();
 
@@ -75,13 +75,12 @@ namespace DigitalMapToDB.DigitalMapParser.Utils
                     for (int i = 0; i < vector.getPointList().Count; i++)
                     {
                         Point point = vector.getPointList()[i];
-                        cmd.CommandText = "INSERT INTO Vector (name, longitude, latitude, typeInMap, orderInVector) "
+                        cmd.CommandText = "INSERT INTO Vector (name, longitude, latitude, orderInVector) "
                                             + "VALUES "
                                             + "("
                                             + "'" + vector.getContent() + "', "
                                             + "'" + point.getLongitude() + "', "
                                             + "'" + point.getLatitude() + "', "
-                                            + "'" + vector.TypeInMap + "', "
                                             + "'" + i + "'"
                                             + ")";
                         cmd.ExecuteNonQuery();
