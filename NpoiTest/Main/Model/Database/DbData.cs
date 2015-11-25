@@ -25,10 +25,12 @@ namespace NpoiTest.Model.Database
             public const string COLUMN_PRJNAME = "prjName";
             public const string COLUMN_KILOMETER_MARK = "kilometer_mark";
             public const string COLUMN_SIDE_DIRECTION = "side_direction";
+            public const string COLUMN_DISTANCE_TO_RAIL = "distance_to_rail";
             public const string COLUMN_LONGITUDE = "longitude";
             public const string COLUMN_LATITUDE = "latitude";
             public const string COLUMN_DEVICE_TYPE = "device_type";
             public const string COLUMN_PHOTO_PATH_NAME = "photoPathName";
+            public const string COLUMN_COMMENT = "comment";
         }
 
         //唯一的数据库连接
@@ -130,10 +132,16 @@ namespace NpoiTest.Model.Database
             List<DbBean> list = new List<DbBean>();
             while (reader.Read())
             {
-                list.Add(new DbBean(reader[DbCons.COLUMN_PRJNAME] + "", reader[DbCons.COLUMN_KILOMETER_MARK] + "",
-                    reader[DbCons.COLUMN_SIDE_DIRECTION] + "", reader.GetDouble(4),
-                    reader.GetDouble(5), reader[DbCons.COLUMN_DEVICE_TYPE] + "",
-                    reader[DbCons.COLUMN_PHOTO_PATH_NAME] + ""));
+                list.Add(new DbBean(
+                reader[DbCons.COLUMN_PRJNAME] + "",
+                reader[DbCons.COLUMN_KILOMETER_MARK] + "",
+                reader[DbCons.COLUMN_SIDE_DIRECTION] + "",
+                reader[DbCons.COLUMN_DISTANCE_TO_RAIL] + "",
+                Double.Parse("" + reader[DbCons.COLUMN_LONGITUDE]),
+                Double.Parse("" + reader[DbCons.COLUMN_LATITUDE]),
+                reader[DbCons.COLUMN_DEVICE_TYPE] + "",
+                reader[DbCons.COLUMN_PHOTO_PATH_NAME] + "",
+                reader[DbCons.COLUMN_COMMENT] + ""));
             }
             return list;
         }
@@ -153,10 +161,20 @@ namespace NpoiTest.Model.Database
             List<DbBean> list = new List<DbBean>();
             while (reader.Read())
             {
-                list.Add(new DbBean(reader[DbCons.COLUMN_PRJNAME] + "", reader[DbCons.COLUMN_KILOMETER_MARK] + "",
-                    reader[DbCons.COLUMN_SIDE_DIRECTION] + "", reader.GetDouble(4),
-                    reader.GetDouble(5), reader[DbCons.COLUMN_DEVICE_TYPE] + "",
-                    reader[DbCons.COLUMN_PHOTO_PATH_NAME] + ""));
+                //                list.Add(new DbBean(reader[DbCons.COLUMN_PRJNAME] + "", reader[DbCons.COLUMN_KILOMETER_MARK] + "",
+                //                    reader[DbCons.COLUMN_SIDE_DIRECTION] + "", reader.GetDouble(4),
+                //                    reader.GetDouble(5), reader[DbCons.COLUMN_DEVICE_TYPE] + "",
+                //                    reader[DbCons.COLUMN_PHOTO_PATH_NAME] + ""));
+                list.Add(new DbBean(
+                    reader[DbCons.COLUMN_PRJNAME] + "",
+                    reader[DbCons.COLUMN_KILOMETER_MARK] + "",
+                    reader[DbCons.COLUMN_SIDE_DIRECTION] + "",
+                    reader[DbCons.COLUMN_DISTANCE_TO_RAIL]+"",
+                    Double.Parse("" + reader[DbCons.COLUMN_LONGITUDE]),
+                    Double.Parse("" + reader[DbCons.COLUMN_LATITUDE]),
+                    reader[DbCons.COLUMN_DEVICE_TYPE] + "",
+                    reader[DbCons.COLUMN_PHOTO_PATH_NAME] + "",
+                    reader[DbCons.COLUMN_COMMENT] + ""));
             }
             return list;
         }

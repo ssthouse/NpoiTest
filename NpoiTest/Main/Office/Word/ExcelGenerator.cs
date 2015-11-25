@@ -19,6 +19,7 @@ namespace NpoiTest.Office.Word
         /// 数据源
         /// </summary>
         private readonly List<Model.Database.DbBean> dataList;
+
         /// <summary>
         /// Excel输出路径
         /// </summary>
@@ -80,9 +81,9 @@ namespace NpoiTest.Office.Word
         private void GenerateHeaderRow(HSSFWorkbook workbook, HSSFSheet sheet)
         {
             //获取第一行
-            HSSFRow row = (HSSFRow)sheet.GetRow(0);
-            string[] columns= { "序号", "设备类型", "公里标" , "侧向", "经度" , "纬度", "备注文本"};
-            for (int i = 0; i < 6; i++)
+            HSSFRow row = (HSSFRow) sheet.GetRow(0);
+            string[] columns = {"序号", "设备类型", "公里标", "侧向", "距线路中心距离", "经度", "纬度", "备注文本"};
+            for (int i = 0; i<columns.Length; i++)
             {
                 ICell cell = row.CreateCell(i);
                 cell.SetCellValue(columns[i]);
@@ -98,14 +99,15 @@ namespace NpoiTest.Office.Word
         private void InitHeaderCellStyle(HSSFWorkbook workbook, ICell cell)
         {
             ICellStyle cellStyle = cell.CellStyle;
-            //横向对齐
-            cellStyle.Alignment = HorizontalAlignment.Center;
             //字体大小
             IFont font = workbook.CreateFont();
             font.FontHeightInPoints = 11;
             font.FontName = "宋体";
             font.Boldweight = 1;
             cellStyle.SetFont(font);
+            //横向对齐
+            cellStyle.Alignment = HorizontalAlignment.Justify;
+            cellStyle.ShrinkToFit = true;
             //填充style
             cell.CellStyle = cellStyle;
         }
@@ -116,9 +118,9 @@ namespace NpoiTest.Office.Word
         /// <param name="sheet"></param>
         private void GenerateDataRow(HSSFWorkbook workbook, HSSFSheet sheet)
         {
-            for (var i = 1; i < dataList.Count; i++)
+            for (var i = 1; i <= dataList.Count; i++)
             {
-                var row = (HSSFRow)sheet.GetRow(i);
+                var row = (HSSFRow) sheet.GetRow(i);
                 Model.Database.DbBean dbBean = dataList[i - 1];
                 //序号
                 ICell cell0 = row.CreateCell(0);
@@ -140,39 +142,47 @@ namespace NpoiTest.Office.Word
                 cell0.SetCellValue(dbBean.SideDirection);
                 cell0.CellStyle.ShrinkToFit = true;
                 InitDataCellStyle(workbook, cell0);
+                //距线路中心距离
+                cell0 = row.CreateCell(4);
+                cell0.SetCellValue(dbBean.DistanceToRail);
+                cell0.CellStyle.ShrinkToFit = true;
+                InitDataCellStyle(workbook, cell0);
                 //经度
                 double temp;
-                if (double.TryParse(dataList[i].Longitude, out temp))
+                if (double.TryParse(dbBean.Longitude, out temp))
                 {
-                    cell0 = row.CreateCell(4);
-                    cell0.SetCellValue(Double.Parse((dataList[i].Longitude)));
+                    cell0 = row.CreateCell(5);
+                    cell0.SetCellValue(Double.Parse((dbBean.Longitude)));
                     cell0.CellStyle.ShrinkToFit = true;
                     InitDataCellNumStyle(workbook, cell0);
                 }
                 else
                 {
-                    cell0 = row.CreateCell(4);
-                    cell0.SetCellValue((dataList[i].Longitude));
+                    cell0 = row.CreateCell(5);
+                    cell0.SetCellValue((dbBean.Longitude));
                     cell0.CellStyle.ShrinkToFit = true;
                     InitDataCellNumStyle(workbook, cell0);
                 }
                 //纬度
-                if (double.TryParse(dataList[i].Latitude, out temp))
+                if (double.TryParse(dbBean.Latitude, out temp))
                 {
-                    cell0 = row.CreateCell(5);
-                    cell0.SetCellValue(double.Parse(dataList[i].Latitude));
+                    cell0 = row.CreateCell(6);
+                    cell0.SetCellValue(double.Parse(dbBean.Latitude));
                     cell0.CellStyle.ShrinkToFit = true;
                     InitDataCellNumStyle(workbook, cell0);
                 }
                 else
                 {
-                    cell0 = row.CreateCell(5);
-                    cell0.SetCellValue(dataList[i].Latitude);
+                    cell0 = row.CreateCell(6);
+                    cell0.SetCellValue(dbBean.Latitude);
                     cell0.CellStyle.ShrinkToFit = true;
                     InitDataCellNumStyle(workbook, cell0);
                 }
                 //备注文本
-                row.CreateCell(6).SetCellValue("备注文本");
+                cell0 = row.CreateCell(7);
+                cell0.SetCellValue(dbBean.Comment);
+                cell0.CellStyle.ShrinkToFit = true;
+                InitDataCellStyle(workbook, cell0);
             }
         }
 
@@ -183,14 +193,15 @@ namespace NpoiTest.Office.Word
         /// <param name="cell"></param>
         private void InitDataCellStyle(HSSFWorkbook workbook, ICell cell)
         {
-            ICellStyle cellStyle = cell.CellStyle;
-            //横向对齐
-            cellStyle.Alignment = HorizontalAlignment.Center;
+            ICellStyle cellStyle = cell.CellStyle;  
             //字体大小
             IFont font = workbook.CreateFont();
             font.FontHeightInPoints = 11;
             font.FontName = "宋体";
             cellStyle.SetFont(font);
+            //横向对齐
+            cellStyle.Alignment = HorizontalAlignment.Center;
+            cellStyle.ShrinkToFit = true;
             //填充style
             cell.CellStyle = cellStyle;
         }
@@ -203,14 +214,15 @@ namespace NpoiTest.Office.Word
         private void InitDataCellNumStyle(HSSFWorkbook workbook, ICell cell)
         {
             ICellStyle cellStyle = cell.CellStyle;
-            //横向对齐
-            //cellStyle.Alignment = HorizontalAlignment.Center;
             //字体大小
-//            IFont font = workbook.CreateFont();
-//            font.FontHeightInPoints = 11;
-//            cellStyle.SetFont(font);
+            IFont font = workbook.CreateFont();
+            font.FontHeightInPoints = 11;
+            cellStyle.SetFont(font);
+            //横向对齐
+            cellStyle.Alignment = HorizontalAlignment.Center;
+            cellStyle.ShrinkToFit = true;
             //填充style
-            //cell.CellStyle = cellStyle;
+            cell.CellStyle = cellStyle;
         }
     }
 }

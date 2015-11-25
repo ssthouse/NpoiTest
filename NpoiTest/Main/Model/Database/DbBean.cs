@@ -24,8 +24,12 @@ namespace NpoiTest.Model.Database
         public string KilometerMark { get; set; }
         //侧向
         public string SideDirection { get; set; }
+        //距线路中心距离
+        public string DistanceToRail { get; set; }
         //照片路径
         public string PhotoPathName { get; set; }
+        //备注
+        public string Comment { get; set; }
 
         public DbBean()
         {
@@ -44,7 +48,8 @@ namespace NpoiTest.Model.Database
         /// <param name="latitude"></param>
         /// <param name="deviceType"></param>
         /// <param name="photoPathName"></param>
-        public DbBean(string prjName, string kilometerMark, string sideDirection, double longitude, double latitude, string deviceType, string photoPathName)
+        public DbBean(string prjName, string kilometerMark, string sideDirection, string distanceToRail,
+            double longitude, double latitude, string deviceType, string photoPathName, string comment)
         {
             PrjName = prjName;
             Longitude = longitude + "";
@@ -52,7 +57,9 @@ namespace NpoiTest.Model.Database
             DeviceType = deviceType;
             KilometerMark = kilometerMark;
             SideDirection = sideDirection;
+            DistanceToRail = distanceToRail;
             PhotoPathName = photoPathName;
+            Comment = comment;
         }
     }
 }
