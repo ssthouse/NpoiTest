@@ -25,8 +25,7 @@ namespace DigitalMapToDB.DigitalMapParser.Utils
 
             //工程中的--------中央经线-----数据
             //TODO---这里是读取文本文件获取中央经线---有可能文本文件的数据格式有问题
-           // double L0 = PrjConstant.getCentralLongitude();
-            double L0 = 117;
+            double L0 = PrjConstant.getCentralLongitude();
 
             double Mf;
             double Nf;

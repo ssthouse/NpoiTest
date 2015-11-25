@@ -211,7 +211,20 @@ namespace NpoiTest.Office.Word
                 XWPFParagraph gp = m_Docx.CreateParagraph(); //创建XWPFParagraph
                 gp.SetAlignment(ParagraphAlignment.CENTER);
                 XWPFRun gr = gp.CreateRun();
-                gr.AddPicture(gfs, (int) NPOI.XWPF.UserModel.PictureType.JPEG, file.Name, 1000000, 1000000);
+                //添加图片（注意设置图片的大小） 默认最小的一边为1000000
+                System.Drawing.Image image = System.Drawing.Image.FromFile(".\\Picture\\" + prjName + "\\" + photoPathName + "\\" + file.Name);
+                int height, width;
+                if (image.Height > image.Width)
+                {
+                    height = 3000000;
+                    width = 2000000;
+                }
+                else
+                {
+                    height = 2000000;
+                    width = 3000000;
+                }
+                gr.AddPicture(gfs, (int) NPOI.XWPF.UserModel.PictureType.JPEG, file.Name, width, height);
                 gfs.Close();
             }
         }
