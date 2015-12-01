@@ -53,7 +53,7 @@ namespace NpoiTest.Model.Database
             }
             else
             {
-                MessageBox.Show("压缩文件不存在");
+                MessageBox.Show("压缩文件数据格式不正确");
             }
         }
 

@@ -91,6 +91,10 @@ namespace NpoiTest.Office.Word
             //第二页
             //表1
             XWPFTable table = m_Docx.CreateTable(4, 2);
+            CT_Tbl ctbl = m_Docx.Document.body.GetTblArray()[0];
+            CT_TblPr ctblpr = ctbl.AddNewTblPr();
+            ctblpr.jc = new CT_Jc();
+            ctblpr.jc.val = ST_Jc.center;
             table.Width = 4000;
             table.GetRow(0).GetCell(0).SetText("项目");
             table.GetRow(1).GetCell(0).SetText("日期");

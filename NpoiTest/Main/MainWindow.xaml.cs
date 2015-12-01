@@ -28,7 +28,6 @@ namespace NpoiTest.Main
         public MainWindow()
         {
             InitializeComponent();
-
             //初始化View---以及点击事件
             InitView();
             //初始化MenuItem的相应时间
@@ -48,7 +47,6 @@ namespace NpoiTest.Main
                 digitalMapToDbView.ResizeMode = ResizeMode.NoResize;
                 digitalMapToDbView.Show();
             };
-
             //Excel输入文件转换为xml输出文件
             this.menuExcelInputToXml.Click += delegate(object sender, RoutedEventArgs args)
             {
@@ -66,29 +64,26 @@ namespace NpoiTest.Main
         {
             //初始位置定位到中心
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            this.ResizeMode = ResizeMode.NoResize;
-
+            this.ResizeMode = ResizeMode.CanMinimize;
             //打开zip文件点击事件
             btnOpenDbFile.Click += delegate
             {
                 //打开文件选择器
                 FileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "zip文件|*.zip";
-                dialog.ShowDialog();
-                //获取选取的文件路径
-                if (dialog.FileName == null || dialog.FileName.Length == 0)
+                //只有当文件选择成功时
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    return;
+                    var zipFilePath = dialog.FileName;
+                    //更新textbox的文字
+                    tbDbPath.Text = zipFilePath;
+                    //实例化数据库数据
+                    dbData = new DbData(zipFilePath);
+                    //初始化project选择框
+                    initPrjSelectCombox();
+                    //初始化下面的datagrid的table
+                    initDataGrid();
                 }
-                var dbPath = dialog.FileName;
-                //更新textbox的文字
-                tbDbPath.Text = dbPath;
-                //实例化数据库数据
-                dbData = new DbData(dbPath);
-                //初始化project选择框
-                initPrjSelectCombox();
-                //初始化下面的datagrid的table
-                initDataGrid();
             };
 
             //工程的ComboBox点击事件

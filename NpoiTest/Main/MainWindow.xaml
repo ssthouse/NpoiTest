@@ -5,17 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="GSM数据转换工具" Height="580" Width="700">
-    
-    
+
+
     <StackPanel Orientation="Vertical">
-        <Menu Margin="10, 10, 0, 10" Height="24">
-            <MenuItem Name="menuTools" Header="  工具" Height="24" FontSize="14" Width="60" 
-                      HorizontalContentAlignment="Right" HorizontalAlignment="Center">
-                <MenuItem Name="menuDigitalMapToDb" Header="数字地图转数据库"></MenuItem>
-                <MenuItem Name="menuExcelInputToXml" Header="Excel输入文件转xml文件"></MenuItem>
-            </MenuItem>
+        <Menu IsMainMenu="True" MinHeight="28" VerticalContentAlignment="Center" VerticalAlignment="Center">
+            <MenuItem FontSize="14" Height="28" Name="menuDigitalMapToDb" Header="数字地图转数据库"
+                      ToolTip="将数字地图文件转化为手机端可读的数据库（.db）文件" />
+            <MenuItem FontSize="14" Height="28" Name="menuExcelInputToXml" Header="Excel输入文件转xml文件"
+                      ToolTip="将初始选址的Excel文件转化为手机端可读的XML文件（.xml）" />
         </Menu>
-        
+
         <Grid>
             <!--总布局-->
             <Grid.ColumnDefinitions>
@@ -30,9 +29,9 @@
                     <StackPanel Orientation="Vertical">
                         <!--上方的输入Panel-->
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Label Content="数据库路径:" Margin="8, 8, 8, 8" />
+                            <Label Content="压缩文件路径:" Margin="8, 8, 8, 8" />
                             <TextBox Name="tbDbPath" Width="160" VerticalContentAlignment="Center"
-                                 Height="24" TextAlignment="Justify" />
+                                     Height="24" TextAlignment="Justify" />
                             <Button Name="btnOpenDbFile" Width="20" Content="..." Margin="10, 8, 8, 8" />
                         </StackPanel>
 
@@ -62,7 +61,7 @@
                             <Label Content="Word路径：" />
                             <TextBox Name="tbWordPath" VerticalContentAlignment="Center" Width="160" />
                             <Button Name="btnGetWordPath" Margin="10, 0, 0, 0" HorizontalContentAlignment="Center"
-                                Content="..." Width="20" />
+                                    Content="..." Width="20" />
                         </StackPanel>
 
                         <!-- 两个输入-->
@@ -71,7 +70,7 @@
                             <TextBox VerticalContentAlignment="Center" Width="140" Height="24" Name="tbWordTitle" />
                         </StackPanel>
                         <StackPanel Margin="0, 0, 0, 10" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="日期:" Margin="0, 0, 10, 0"/>
+                            <Label Content="日期:" Margin="0, 0, 10, 0" />
                             <TextBox VerticalContentAlignment="Center" Width="140" Height="24" Name="tbWordDate" />
                         </StackPanel>
                         <Button Content="生成Word" Name="btnGenerateWord" Height="25" Width="180" Margin="0, 10, 0, 10" />
@@ -85,7 +84,7 @@
                             <Label Content="Excel路径：" />
                             <TextBox Name="tbExcelPath" VerticalContentAlignment="Center" Width="160" />
                             <Button Name="btnGetExcelPath" Margin="10, 0, 0, 0" HorizontalContentAlignment="Center"
-                                Content="..." Width="20" />
+                                    Content="..." Width="20" />
                         </StackPanel>
                         <Button Content="生成Excel" Name="btnGenerateExcel" Height="25" Width="180" Margin="0, 10, 0, 10" />
                     </StackPanel>
@@ -95,10 +94,10 @@
                 <GroupBox Header="使用步骤" Margin="10, 10, 10, 10">
                     <!--使用说明-->
                     <TextBlock FontSize="14" TextWrapping="WrapWithOverflow" Margin="10, 10, 10, 10"
-                           Text="1.选择数据库文件&#x000A;2.选择需要导出的工程名称&#x000A;3.选择导出的文件目录&#x000A;4.选择导出word或excel文件&#x000A;" />
+                               Text="1.选择手机端导出的压缩文件（.zip）&#x000A;2.选择需要导出的工程名称&#x000A;3.选择导出的文件目录&#x000A;4.选择导出word或excel文件&#x000A;" />
                 </GroupBox>
             </StackPanel>
         </Grid>
     </StackPanel>
-  
+
 </Window>
