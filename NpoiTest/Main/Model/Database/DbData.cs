@@ -143,25 +143,16 @@ namespace NpoiTest.Model.Database
             List<DbBean> list = new List<DbBean>();
             while (reader.Read())
             {
-//                //解析出每一个Bean数据（Marker）
-//                list.Add(new DbBean(
-//                reader[DbCons.COLUMN_PRJNAME] + "",
-//                reader[DbCons.COLUMN_KILOMETER_MARK] + "",
-//                reader[DbCons.COLUMN_SIDE_DIRECTION] + "",
-//                reader[DbCons.COLUMN_DISTANCE_TO_RAIL] + "",
-//                Double.Parse("" + reader[DbCons.COLUMN_LONGITUDE]),
-//                Double.Parse("" + reader[DbCons.COLUMN_LATITUDE]),
-//                reader[DbCons.COLUMN_DEVICE_TYPE] + "",
-//                reader[DbCons.COLUMN_PHOTO_PATH_NAME] + "",
-//                reader[DbCons.COLUMN_COMMENT] + ""));
                 //填充数据
                 DbBean bean = new DbBean();
-                bean.PrjName = reader[DbCons.COLUMN_PRJNAME]+"";
+                bean.PrjName = reader[DbCons.COLUMN_PRJNAME] + "";
                 bean.Longitude = reader[DbCons.COLUMN_LONGITUDE] + "";
                 bean.Latitude = reader[DbCons.COLUMN_LATITUDE] + "";
                 bean.DeviceType = reader[DbCons.COLUMN_DEVICE_TYPE] + "";
+                bean.KilometerMark = reader[DbCons.COLUMN_KILOMETER_MARK] + "";
                 bean.SideDirection = reader[DbCons.COLUMN_SIDE_DIRECTION] + "";
                 bean.DistanceToRail = reader[DbCons.COLUMN_DISTANCE_TO_RAIL] + "";
+                bean.PhotoPathName = reader[DbCons.COLUMN_PHOTO_PATH_NAME] + "";
                 bean.Comment = reader[DbCons.COLUMN_COMMENT] + "";
                 bean.TowerType = reader[DbCons.COLUMN_TOWER_TYPE] + "";
                 bean.TowerHeight = reader[DbCons.COLUMN_TOWER_HEIGHT] + "";
@@ -196,8 +187,10 @@ namespace NpoiTest.Model.Database
                 bean.Longitude = reader[DbCons.COLUMN_LONGITUDE] + "";
                 bean.Latitude = reader[DbCons.COLUMN_LATITUDE] + "";
                 bean.DeviceType = reader[DbCons.COLUMN_DEVICE_TYPE] + "";
+                bean.KilometerMark = reader[DbCons.COLUMN_KILOMETER_MARK] + "";
                 bean.SideDirection = reader[DbCons.COLUMN_SIDE_DIRECTION] + "";
                 bean.DistanceToRail = reader[DbCons.COLUMN_DISTANCE_TO_RAIL] + "";
+                bean.PhotoPathName = reader[DbCons.COLUMN_PHOTO_PATH_NAME] + "";
                 bean.Comment = reader[DbCons.COLUMN_COMMENT] + "";
                 bean.TowerType = reader[DbCons.COLUMN_TOWER_TYPE] + "";
                 bean.TowerHeight = reader[DbCons.COLUMN_TOWER_HEIGHT] + "";
