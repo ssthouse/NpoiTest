@@ -41,8 +41,7 @@ namespace NpoiTest.Office.Word
             //内容
             for (int i = 0; i < datalist.Count; i++)
             {
-                word_inster_table(m_Docx, datalist[i].DeviceType, datalist[i].KilometerMark,
-                    datalist[i].SideDirection, datalist[i].Longitude, datalist[i].Latitude, i + 1);
+                word_inster_table(m_Docx, datalist[i], i + 1);
                 //TODO 此处插入图片
                 word_insert_picture(m_Docx, datalist[i].PrjName, datalist[i].PhotoPathName);
             }
@@ -167,8 +166,7 @@ namespace NpoiTest.Office.Word
         /// <param name="side_direction">下行侧向</param>
         /// <param name="longitude">经度</param>
         /// <param name="latitude">纬度</param>
-        private static void word_inster_table(XWPFDocument m_Docx, string device_type = "", string kilometer_mark = "",
-            string side_direction = "", string longitude = "", string latitude = "", int i = 1)
+        private static void word_inster_table(XWPFDocument m_Docx, DbBean bean, int i = 1)
         {
             XWPFTable table = m_Docx.CreateTable(12, 2);
             CT_Tbl ctbl = m_Docx.Document.body.GetTblArray()[i];
@@ -178,22 +176,28 @@ namespace NpoiTest.Office.Word
 
             table.Width = 3500;
             table.GetRow(0).GetCell(0).SetText("设备类型");
-            table.GetRow(0).GetCell(1).SetText(device_type);
+            table.GetRow(0).GetCell(1).SetText(bean.DeviceType);
             table.GetRow(1).GetCell(0).SetText("公里标");
-            table.GetRow(1).GetCell(1).SetText(kilometer_mark);
+            table.GetRow(1).GetCell(1).SetText(bean.KilometerMark);
             table.GetRow(2).GetCell(0).SetText("下行侧向");
-            table.GetRow(2).GetCell(1).SetText(side_direction);
+            table.GetRow(2).GetCell(1).SetText(bean.SideDirection);
             table.GetRow(3).GetCell(0).SetText("距线路中心距离（m）");
             table.GetRow(4).GetCell(0).SetText("经度");
-            table.GetRow(4).GetCell(1).SetText(longitude);
+            table.GetRow(4).GetCell(1).SetText(bean.Longitude);
             table.GetRow(5).GetCell(0).SetText("纬度");
-            table.GetRow(5).GetCell(1).SetText(latitude);
+            table.GetRow(5).GetCell(1).SetText(bean.Latitude);
             table.GetRow(6).GetCell(0).SetText("杆塔类型");
+            table.GetRow(6).GetCell(1).SetText(bean.TowerType);
             table.GetRow(7).GetCell(0).SetText("杆塔高度");
+            table.GetRow(7).GetCell(1).SetText(bean.TowerHeight);
             table.GetRow(8).GetCell(0).SetText("天线1方向角");
+            table.GetRow(8).GetCell(1).SetText(bean.AntennaDirection1);
             table.GetRow(9).GetCell(0).SetText("天线2方向角");
+            table.GetRow(9).GetCell(1).SetText(bean.AntennaDirection2);
             table.GetRow(10).GetCell(0).SetText("天线3方向角");
+            table.GetRow(10).GetCell(1).SetText(bean.AntennaDirection3);
             table.GetRow(11).GetCell(0).SetText("天线4方向角");
+            table.GetRow(11).GetCell(1).SetText(bean.AntennaDirection4);
             CT_TcPr m_Pr = table.GetRow(2).GetCell(1).GetCTTc().AddNewTcPr();
             m_Pr.tcW = new CT_TblWidth();
             m_Pr.tcW.w = "3500";
