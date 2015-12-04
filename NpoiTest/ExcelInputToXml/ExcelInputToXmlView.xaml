@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NpoiTest.ExcelInputToXml"
         mc:Ignorable="d"
-        Title="ExcelInputToXml" Height="240" Width="340">
+        Title="Excel初始选址文件转化为Xml文件" Height="240" Width="340">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="340" />

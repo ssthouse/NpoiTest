@@ -9,7 +9,7 @@
 
     <StackPanel Orientation="Vertical">
         <Menu IsMainMenu="True" MinHeight="28" VerticalContentAlignment="Center" VerticalAlignment="Center">
-            <MenuItem FontSize="14" Height="28" Name="menuDigitalMapToDb" Header="数字地图转数据库"
+            <MenuItem FontSize="14" Height="28" Name="menuDigitalMapToDb" Header="数字地图文件转数据库文件"
                       ToolTip="将数字地图文件转化为手机端可读的数据库（.db）文件" />
             <MenuItem FontSize="14" Height="28" Name="menuExcelInputToXml" Header="Excel输入文件转xml文件"
                       ToolTip="将初始选址的Excel文件转化为手机端可读的XML文件（.xml）" />
@@ -29,7 +29,7 @@
                     <StackPanel Orientation="Vertical">
                         <!--上方的输入Panel-->
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Label Content="压缩文件路径:" Margin="8, 8, 8, 8" />
+                            <Label Content="手机导出压缩文件:" Margin="8, 8, 8, 8" />
                             <TextBox Name="tbDbPath" Width="160" VerticalContentAlignment="Center"
                                      Height="24" TextAlignment="Justify" />
                             <Button Name="btnOpenDbFile" Width="20" Content="..." Margin="10, 8, 8, 8" />
@@ -64,15 +64,15 @@
                                     Content="..." Width="20" />
                         </StackPanel>
 
-                        <!-- 两个输入-->
-                        <StackPanel Margin="0, 10, 0, 10" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="标题:" Margin="0, 0, 10, 0" />
-                            <TextBox VerticalContentAlignment="Center" Width="140" Height="24" Name="tbWordTitle" />
-                        </StackPanel>
-                        <StackPanel Margin="0, 0, 0, 10" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="日期:" Margin="0, 0, 10, 0" />
-                            <TextBox VerticalContentAlignment="Center" Width="140" Height="24" Name="tbWordDate" />
-                        </StackPanel>
+<!--                        ~1~ 两个输入@1@-->
+<!--                        <StackPanel Margin="0, 10, 0, 10" Orientation="Horizontal" HorizontalAlignment="Center">-->
+<!--                            <Label Content="标题:" Margin="0, 0, 10, 0" />-->
+<!--                            <TextBox VerticalContentAlignment="Center" Width="140" Height="24" Name="tbWordTitle" />-->
+<!--                        </StackPanel>-->
+<!--                        <StackPanel Margin="0, 0, 0, 10" Orientation="Horizontal" HorizontalAlignment="Center">-->
+<!--                            <Label Content="日期:" Margin="0, 0, 10, 0" />-->
+<!--                            <TextBox VerticalContentAlignment="Center" Width="140" Height="24" Name="tbWordDate" />-->
+<!--                        </StackPanel>-->
                         <Button Content="生成Word" Name="btnGenerateWord" Height="25" Width="180" Margin="0, 10, 0, 10" />
                     </StackPanel>
                 </GroupBox>

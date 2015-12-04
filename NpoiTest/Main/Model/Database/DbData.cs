@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows;
 using DigitalMapToDB.DigitalMapParser.Utils;
 using ICSharpCode.SharpZipLib.Zip;
+using NPOI.OpenXmlFormats.Dml;
 
 namespace NpoiTest.Model.Database
 {
@@ -16,6 +17,9 @@ namespace NpoiTest.Model.Database
     {
         private const string TAG = "DbData";
 
+        /// <summary>
+        /// 数据库常量
+        /// </summary>
         private class DbCons
         {
             //数据库中的表名
@@ -29,8 +33,15 @@ namespace NpoiTest.Model.Database
             public const string COLUMN_LONGITUDE = "longitude";
             public const string COLUMN_LATITUDE = "latitude";
             public const string COLUMN_DEVICE_TYPE = "device_type";
-            public const string COLUMN_PHOTO_PATH_NAME = "photoPathName";
+            public const string COLUMN_PHOTO_PATH_NAME = "photo_path_name";
             public const string COLUMN_COMMENT = "comment";
+            public const string COLUMN_TOWER_TYPE = "tower_type";
+            public const string COLUMN_TOWER_HEIGHT = "tower_height";
+            //TODO---新加入的数据---后续需要解析
+            public const string COLUMN_ANTENNA_DIRECTION_1 = "antenna_direction_1";
+            public const string COLUMN_ANTENNA_DIRECTION_2 = "antenna_direction_2";
+            public const string COLUMN_ANTENNA_DIRECTION_3 = "antenna_direction_3";
+            public const string COLUMN_ANTENNA_DIRECTION_4 = "antenna_direction_4";
         }
 
         //唯一的数据库连接
@@ -38,7 +49,7 @@ namespace NpoiTest.Model.Database
         private const string DATABASE_PATH = ".\\Picture\\Location.db";
 
         /// <summary>
-        ///     传入数据库路径的构造方法
+        /// 传入数据库路径的构造方法
         /// </summary>
         /// <param name="zipFilePath"></param>
         public DbData(string zipFilePath)
@@ -132,16 +143,34 @@ namespace NpoiTest.Model.Database
             List<DbBean> list = new List<DbBean>();
             while (reader.Read())
             {
-                list.Add(new DbBean(
-                reader[DbCons.COLUMN_PRJNAME] + "",
-                reader[DbCons.COLUMN_KILOMETER_MARK] + "",
-                reader[DbCons.COLUMN_SIDE_DIRECTION] + "",
-                reader[DbCons.COLUMN_DISTANCE_TO_RAIL] + "",
-                Double.Parse("" + reader[DbCons.COLUMN_LONGITUDE]),
-                Double.Parse("" + reader[DbCons.COLUMN_LATITUDE]),
-                reader[DbCons.COLUMN_DEVICE_TYPE] + "",
-                reader[DbCons.COLUMN_PHOTO_PATH_NAME] + "",
-                reader[DbCons.COLUMN_COMMENT] + ""));
+//                //解析出每一个Bean数据（Marker）
+//                list.Add(new DbBean(
+//                reader[DbCons.COLUMN_PRJNAME] + "",
+//                reader[DbCons.COLUMN_KILOMETER_MARK] + "",
+//                reader[DbCons.COLUMN_SIDE_DIRECTION] + "",
+//                reader[DbCons.COLUMN_DISTANCE_TO_RAIL] + "",
+//                Double.Parse("" + reader[DbCons.COLUMN_LONGITUDE]),
+//                Double.Parse("" + reader[DbCons.COLUMN_LATITUDE]),
+//                reader[DbCons.COLUMN_DEVICE_TYPE] + "",
+//                reader[DbCons.COLUMN_PHOTO_PATH_NAME] + "",
+//                reader[DbCons.COLUMN_COMMENT] + ""));
+                //填充数据
+                DbBean bean = new DbBean();
+                bean.PrjName = reader[DbCons.COLUMN_PRJNAME]+"";
+                bean.Longitude = reader[DbCons.COLUMN_LONGITUDE] + "";
+                bean.Latitude = reader[DbCons.COLUMN_LATITUDE] + "";
+                bean.DeviceType = reader[DbCons.COLUMN_DEVICE_TYPE] + "";
+                bean.SideDirection = reader[DbCons.COLUMN_SIDE_DIRECTION] + "";
+                bean.DistanceToRail = reader[DbCons.COLUMN_DISTANCE_TO_RAIL] + "";
+                bean.Comment = reader[DbCons.COLUMN_COMMENT] + "";
+                bean.TowerType = reader[DbCons.COLUMN_TOWER_TYPE] + "";
+                bean.TowerHeight = reader[DbCons.COLUMN_TOWER_HEIGHT] + "";
+                bean.AntennaDirection1 = reader[DbCons.COLUMN_ANTENNA_DIRECTION_1] + "";
+                bean.AntennaDirection2 = reader[DbCons.COLUMN_ANTENNA_DIRECTION_2] + "";
+                bean.AntennaDirection3 = reader[DbCons.COLUMN_ANTENNA_DIRECTION_3] + "";
+                bean.AntennaDirection4 = reader[DbCons.COLUMN_ANTENNA_DIRECTION_4] + "";
+                //添加数据
+                list.Add(bean);
             }
             return list;
         }
@@ -161,20 +190,23 @@ namespace NpoiTest.Model.Database
             List<DbBean> list = new List<DbBean>();
             while (reader.Read())
             {
-                //                list.Add(new DbBean(reader[DbCons.COLUMN_PRJNAME] + "", reader[DbCons.COLUMN_KILOMETER_MARK] + "",
-                //                    reader[DbCons.COLUMN_SIDE_DIRECTION] + "", reader.GetDouble(4),
-                //                    reader.GetDouble(5), reader[DbCons.COLUMN_DEVICE_TYPE] + "",
-                //                    reader[DbCons.COLUMN_PHOTO_PATH_NAME] + ""));
-                list.Add(new DbBean(
-                    reader[DbCons.COLUMN_PRJNAME] + "",
-                    reader[DbCons.COLUMN_KILOMETER_MARK] + "",
-                    reader[DbCons.COLUMN_SIDE_DIRECTION] + "",
-                    reader[DbCons.COLUMN_DISTANCE_TO_RAIL]+"",
-                    Double.Parse("" + reader[DbCons.COLUMN_LONGITUDE]),
-                    Double.Parse("" + reader[DbCons.COLUMN_LATITUDE]),
-                    reader[DbCons.COLUMN_DEVICE_TYPE] + "",
-                    reader[DbCons.COLUMN_PHOTO_PATH_NAME] + "",
-                    reader[DbCons.COLUMN_COMMENT] + ""));
+                //填充数据
+                DbBean bean = new DbBean();
+                bean.PrjName = reader[DbCons.COLUMN_PRJNAME] + "";
+                bean.Longitude = reader[DbCons.COLUMN_LONGITUDE] + "";
+                bean.Latitude = reader[DbCons.COLUMN_LATITUDE] + "";
+                bean.DeviceType = reader[DbCons.COLUMN_DEVICE_TYPE] + "";
+                bean.SideDirection = reader[DbCons.COLUMN_SIDE_DIRECTION] + "";
+                bean.DistanceToRail = reader[DbCons.COLUMN_DISTANCE_TO_RAIL] + "";
+                bean.Comment = reader[DbCons.COLUMN_COMMENT] + "";
+                bean.TowerType = reader[DbCons.COLUMN_TOWER_TYPE] + "";
+                bean.TowerHeight = reader[DbCons.COLUMN_TOWER_HEIGHT] + "";
+                bean.AntennaDirection1 = reader[DbCons.COLUMN_ANTENNA_DIRECTION_1] + "";
+                bean.AntennaDirection2 = reader[DbCons.COLUMN_ANTENNA_DIRECTION_2] + "";
+                bean.AntennaDirection3 = reader[DbCons.COLUMN_ANTENNA_DIRECTION_3] + "";
+                bean.AntennaDirection4 = reader[DbCons.COLUMN_ANTENNA_DIRECTION_4] + "";
+                //添加数据
+                list.Add(bean);
             }
             return list;
         }

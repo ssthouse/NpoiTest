@@ -56,6 +56,12 @@ namespace NpoiTest.ExcelInputToXml
                     //初始化文件转换器
                     excelToXmlConverter = new ExcelToXmlConverter(fileDialog.FileName);
                     this.tboxExcelFilePath.Text = fileDialog.FileName;
+                    //检测Excel数据是否可用
+                    if (!excelToXmlConverter.IsDataValid())
+                    {
+                        MessageBox.Show("Excel输入文件数据格式有误！", "提示");
+                        this.tboxExcelFilePath.Text = "";
+                    }
                 }
             };
 

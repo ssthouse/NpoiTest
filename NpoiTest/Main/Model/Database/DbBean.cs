@@ -30,12 +30,24 @@ namespace NpoiTest.Model.Database
         public string PhotoPathName { get; set; }
         //备注
         public string Comment { get; set; }
+        //杆塔类型
+        public string TowerType { get; set; }
+        //杆塔高度
+        public string TowerHeight { get; set; }
+        //天线方向1
+        public string AntennaDirection1 { get; set; }
+        //天线方向2
+        public string AntennaDirection2 { get; set; }
+        //天线方向3
+        public string AntennaDirection3 { get; set; }
+        //天线方向4
+        public string AntennaDirection4 { get; set; }
 
+        /// <summary>
+        /// 空的构造方法
+        /// </summary>
         public DbBean()
         {
-            PrjName = "hahaha";
-            Longitude = "a'regm";
-            Latitude = "mlerkgnr";
         }
 
         /// <summary>

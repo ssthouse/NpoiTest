@@ -7,15 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using DigitalMapToDB.DigitalMapParser.Utils;
 
 namespace NpoiTest.ExcelInputToXml
 {
     class ExcelToXmlConverter
     {
-        /// <summary>
-        /// 坐标的默认偏移量
-        /// </summary>
-        private const double OFFSET = 0.00002;
+        private const string TAG = "ExcelToXmlConverter";
 
         /// <summary>
         /// 输出的xml文件中的属性
@@ -42,12 +40,28 @@ namespace NpoiTest.ExcelInputToXml
             this.filePath = filePath;
             //解析文件
             parseExcel();
-            //检查空格
-            //checkspace();
         }
 
         /// <summary>
-        /// 解析Excel文件 填充数据
+        /// 检查Excel中解析出来的数据是否正确
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDataValid()
+        {
+            Log.Err(TAG, "我的数据一共有：\t"+dataList.Count);
+            bool result = true;
+            foreach (Data data in dataList)
+            {
+                if (data.Kmmark.Length == 0 || data.Lateral.Length == 0 || data.DistanceToRail.Length == 0)
+                {
+                    result = false;
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 解析Excel文件 填充数据到dataList中
         /// </summary>
         private void parseExcel()
         {
@@ -67,6 +81,11 @@ namespace NpoiTest.ExcelInputToXml
                 Data data = new Data();
                 //填充数据
                 data.Devicetype = row.GetCell(1).ToString();
+                //如果连设备类型都没有---就直接跳过好了
+                if (data.Devicetype.Length == 0)
+                {
+                    continue;
+                }
                 data.Kmmark = row.GetCell(2).ToString();
                 data.Lateral = row.GetCell(3).ToString();
                 data.DistanceToRail = row.GetCell(4).ToString();
@@ -74,52 +93,6 @@ namespace NpoiTest.ExcelInputToXml
                 data.Latitude = row.GetCell(6).ToString();
                 data.Comment = row.GetCell(7).ToString();
                 dataList.Add(data);
-            }
-        }
-
-        /// <summary>
-        /// 检查空格
-        /// </summary>
-        /// <returns></returns>
-        private void checkspace()
-        {
-            for (int i = 0; i < dataList.Count; i++)
-            {
-                if (dataList[i].Longitude == "" || dataList[i].Latitude == "")
-                {
-                    for (int k = i - 1; k >= 0; k--)
-                    {
-                        if (!(dataList[k].Longitude == "" || dataList[k].Latitude == ""))
-                        {
-                            dataList[i].Longitude = (Convert.ToDouble(dataList[k].Longitude) + OFFSET).ToString();
-                            dataList[i].Latitude = (Convert.ToDouble(dataList[k].Latitude) + OFFSET).ToString();
-                            break;
-                        }
-                    }
-                    if (dataList[i].Longitude == "" || dataList[i].Latitude == "")
-                    {
-                        int space = 1;
-                        for (int k = i + 1; k < dataList.Count; k++)
-                        {
-                            if (!(dataList[k].Longitude == "" || dataList[k].Latitude == ""))
-                            {
-                                dataList[i].Longitude =
-                                    (Convert.ToDouble(dataList[k].Longitude) - 0.00002 * space).ToString();
-                                dataList[i].Latitude =
-                                    (Convert.ToDouble(dataList[k].Latitude) - 0.00002 * space).ToString();
-                                break;
-                            }
-                            else
-                            {
-                                space++;
-                            }
-                        }
-                        if (dataList[i].Longitude == "" || dataList[i].Latitude == "")
-                        {
-                            Console.Out.Write("数据错误");
-                        }
-                    }
-                }
             }
         }
 

@@ -47,15 +47,28 @@ namespace NpoiTest.Office.Word
                 word_insert_picture(m_Docx, datalist[i].PrjName, datalist[i].PhotoPathName);
             }
             //输出
+            FileStream sw = null;
             try
             {
-                FileStream sw = File.Create(outputPath);
+                sw = File.Create(outputPath);
+                if (m_Docx == null)
+                {
+                    Log.Err(TAG, "m_Docx is null");
+                }
+                if (sw == null)
+                {
+                    Log.Err(TAG, "sw is null");
+                }
                 m_Docx.Write(sw);
                 sw.Close();
             }
             catch
             {
                 Log.Err(TAG, "something is wrong");
+            }
+            finally
+            {
+                sw.Close();
             }
         }
 
@@ -207,6 +220,11 @@ namespace NpoiTest.Office.Word
         private static void word_insert_picture(XWPFDocument m_Docx, string prjName, string photoPathName)
         {
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(".\\Picture\\" + prjName + "\\" + photoPathName);
+            if (dir.Exists == false)
+            {
+                Log.Err(TAG, "路径不存在");
+                return;
+            }
             System.IO.FileInfo[] files = dir.GetFiles(); // 获取所有文件信息。。
             foreach (System.IO.FileInfo file in files)
             {
